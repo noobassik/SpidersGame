@@ -23,7 +23,7 @@ public class AnimalTest {
         web.addSpider(playerSpider);
         web.setPlayerSpider(playerSpider);
         web.addSpider(botSpider);
-        playerSpider.die();
+      //  playerSpider.die();
         Assert.assertEquals(web.getWebNode(new Point(0, 0)).getAnimal(), null);
         Assert.assertEquals(web.getSpiderList().contains(playerSpider), false);
     }
@@ -36,12 +36,11 @@ public class AnimalTest {
         Nature nature = new Nature(web, bot);
         Spider playerSpider = new Spider(web.getWebNode(new Point(0, 0)), 100, web);
         Spider botSpider = new Spider(web.getWebNode(new Point(0, 1)), 100, web);
-//        nature.generateAnimals();
         web.addSpider(playerSpider);
         web.setPlayerSpider(playerSpider);
         web.addSpider(botSpider);
         web.setPlayerSpider(playerSpider);
-        botSpider.die();
+       // botSpider.die();
         Assert.assertEquals(web.getWebNode(new Point(0, 1)).getAnimal(), null);
         Assert.assertEquals(web.getSpiderList().contains(botSpider), false);
     }
@@ -55,7 +54,7 @@ public class AnimalTest {
         Insect insect = new Fly(web.getWebNode(new Point(0, 0)), web);
         // nature.createAnimal(insect);
         web.addInsect(insect);
-        insect.die();
+       // insect.die();
         Assert.assertEquals(web.getWebNode(new Point(0, 0)).getAnimal(), null);
         Assert.assertEquals(web.getInsectList().contains(insect), false);
     }

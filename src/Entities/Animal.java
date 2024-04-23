@@ -10,6 +10,7 @@ public abstract class Animal {
     public Animal(WebNode webNode, Web web) {
         if (web.getWebNode(webNode.getPosition()).isEmpty()){
             this.webNode = webNode;
+            webNode.setAnimal(this);
         }
         this.web = web;
     }
@@ -22,9 +23,10 @@ public abstract class Animal {
         this.webNode = newNode;
     }
 
-    public void die() {
+    protected void die() {
         this.web.removeInsect(this);
         this.web = null;
-        this.webNode.releaseAnimal();
+        this.webNode.setAnimal(null);
+        this.setWebNode(null);
     }
 }

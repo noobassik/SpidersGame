@@ -29,36 +29,39 @@ public class Spider extends Animal {
     }
 
     public void makeMove(Direction direction) {
+        setHealth(this.health - 1);
+        if (isAlive()) {
+            this.die();
+            return;
+        }
         ListIterator<WebNode> iterator = (ListIterator<WebNode>) web.getWebNodes().iterator();
         if (iterator.hasNext()) {
             WebNode nextWebNode = webNode.getNextWebNode(direction);
             if (nextWebNode != null) {
                 if (nextWebNode.getAnimal() == null) {
-                    setHealth(this.health - 1);
-                    if (isAlive()) {
-                        this.die();
-                    } else {
-                        moveToNextNode(nextWebNode);
-                    }
+                    moveToNextNode(nextWebNode);
                 } else if (nextWebNode.getAnimal() instanceof Insect) {
-                    setHealth(this.health + ((Insect) nextWebNode.getAnimal()).getValue() - 1);
+                    setHealth(this.health + ((Insect) nextWebNode.getAnimal()).getValue());
                     //nextWebNode.releaseAnimal();
                     nextWebNode.getAnimal().die();
                     moveToNextNode(nextWebNode);
                 }
-            } else {
-                setHealth(this.health - 1);
             }
-
+        } else {
+            setHealth(this.health - 1);
         }
+
     }
+
+
 
     public boolean isValid() {
         return true;
     }
 
     private void moveToNextNode(WebNode nextWebNode) {
-        this.webNode.releaseAnimal();
+        this.webNode.setAnimal(null);
+        this.setWebNode(null);
         nextWebNode.setAnimal(this);
         setWebNode(nextWebNode);
     }
@@ -68,10 +71,11 @@ public class Spider extends Animal {
     }
 
     @Override
-    public void die() {
+    protected void die() {
         this.health = 0;
         super.web.removeSpider(this);
-        super.webNode.releaseAnimal();
+        super.webNode.setAnimal(null);
+        this.setWebNode(null);
         if (this == web.getPlayerSpider()) {
             super.web.setPlayerSpider(null);
             this.game.changePlayerSpider(this); // TODO: game is null, верная ли связь - через обсервер

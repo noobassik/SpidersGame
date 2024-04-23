@@ -14,7 +14,8 @@ public class WebNodeTest {
         Spider playerSpider = new Spider(web.getWebNode(new Point(0, 2)), 100, web);
         web.addSpider(playerSpider);
         web.setPlayerSpider(playerSpider);
-        playerSpider.getWebNode().releaseAnimal();
+        playerSpider.getWebNode().setAnimal(null);
+        playerSpider.setWebNode(null);
         Assert.assertEquals(null, web.getWebNode(new Point(0, 2)).getAnimal());
         Assert.assertEquals(null, playerSpider.getWebNode());
     }
@@ -27,7 +28,8 @@ public class WebNodeTest {
         web.addSpider(playerSpider);
         web.setPlayerSpider(playerSpider);
         web.addSpider(botSpider);
-        botSpider.getWebNode().releaseAnimal();
+        botSpider.getWebNode().setAnimal(null);
+        botSpider.setWebNode(null);
         Assert.assertEquals(null, web.getWebNode(new Point(0, 1)).getAnimal());
         Assert.assertEquals(null, botSpider.getWebNode());
     }
@@ -37,11 +39,12 @@ public class WebNodeTest {
         Web web = new Web(3);
         Grasshopper grasshopper = new Grasshopper(web.getWebNode(new Point(0, 2)),  web);
         web.addInsect(grasshopper);
-        grasshopper.getWebNode().releaseAnimal();
+        grasshopper.getWebNode().setAnimal(null);
+        grasshopper.setWebNode(null);
         Assert.assertEquals(null, web.getWebNode(new Point(0, 2)).getAnimal());
         Assert.assertEquals(null, grasshopper.getWebNode());
     }
-
+    // при добавлении насекомого в занятую ячейку, добавление не происходит и насекомому ничего не присваивается, никуда не добавляется
     @Test
     public void InitializeAnimalInOccupiedWebNode() {
         Web web = new Web(3);
@@ -49,9 +52,9 @@ public class WebNodeTest {
         Fly fly = new Fly(web.getWebNode(new Point(0, 2)),  web);
         web.addInsect(grasshopper);
         web.addInsect(fly); // муха не добавляется никуда и поля null
-        Assert.assertEquals(fly, web.getWebNode(new Point(0, 2)).getAnimal());
-        Assert.assertEquals(web.getWebNode(new Point(0, 2)), fly.getWebNode());
-        Assert.assertEquals(null, grasshopper.getWebNode());
+        Assert.assertEquals(grasshopper, web.getWebNode(new Point(0, 2)).getAnimal());
+        Assert.assertEquals(web.getWebNode(new Point(0, 2)), grasshopper.getWebNode());
+        Assert.assertEquals(null, fly.getWebNode());
     }
 
 

@@ -21,7 +21,7 @@ public class WebNode {
         return this.position;
     }
 
-    public void releaseAnimal() {
+    private void releaseAnimal() {
         this.animal.setWebNode(null);
         this.animal = null;
     }
@@ -31,9 +31,9 @@ public class WebNode {
     }
 
     public void setAnimal(Animal animal) {
-        if (this.animal != null) {
-            return;
-        }
+//        if (this.animal != null) {
+//            return;
+//        }
         this.animal = animal;
     }
 
