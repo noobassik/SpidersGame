@@ -31,9 +31,6 @@ public class WebNode {
     }
 
     public void setAnimal(Animal animal) {
-//        if (this.animal != null) {
-//            return;
-//        }
         this.animal = animal;
     }
 
