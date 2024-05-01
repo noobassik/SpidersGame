@@ -51,7 +51,9 @@ public class Web {
     }
 
     public void setPlayerSpider(Spider spider) {
-        this.playerSpider = spider;
+        if (this.playerSpider == null){
+            this.playerSpider = spider;
+        }
     }
 
     public Spider getPlayerSpider() {
@@ -110,10 +112,8 @@ public class Web {
     }
 
     private void setAnimalToWebNode(Animal animal, Point position) {
-        ListIterator<WebNode> iterator = (ListIterator<WebNode>) webNodes.iterator();
-        while (iterator.hasNext()) {
-            WebNode webNode = iterator.next();
-            if (webNode.getPosition().equals(position)) {
+        for (WebNode webNode : webNodes){
+            if (webNode.getPosition().equals(position)){
                 if (webNode != null) {
                     webNode.setAnimal(animal);
                 }

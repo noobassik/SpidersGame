@@ -26,7 +26,14 @@ public class Game {
         this.nature.generateAnimals();
 //        changePlayerSpider(web.getSpiderList().get(0));
         //this.web.getPlayerSpdier().makeMove(Direction.east());
-//        this.bot.makeSmartMove();
+//        this.bot.moveAllBots();
+
+        web.getPlayerSpider().addPlayerSpiderActionListener(new PlayerSpiderObserver());
+
+        for (Spider botSpider : bot.getBotSpiderList()){
+            botSpider.addBotSpiderActionListener(new BotSpiderObserver());
+        }
+
         for (Insect insect : this.web.getInsectList()){
             insect.addInsectActionListener(new InsectObserver());
         }
@@ -41,11 +48,21 @@ public class Game {
     public Bot getBot() {
         return this.bot;
     }
-
+    // TODO: это точно не public
     public void changePlayerSpider(Spider spider) {
         int index = new Random().nextInt(bot.getBotSpiderList().size());
         web.setPlayerSpider(bot.getBotSpiderList().get(index));
         bot.deleteSpiderFromList(index);
+    }
+
+    private void disappearInsects() {
+        for (Insect insect : web.getInsectList()) {
+            insect.disappearFromWeb();
+        }
+        for (Insect insect : insectsToRemove){
+            web.removeInsect(insect);
+        }
+        insectsToRemove.clear();
     }
 
     private ArrayList<Spider> spidersToRemove = new ArrayList<>();
@@ -56,6 +73,13 @@ public class Game {
         @Override
         public void playerDied(PlayerActionEvent event) {
             endGame();
+        }
+
+        @Override
+        public void playerMoved(PlayerActionEvent event) {
+            bot.moveAllBots(); // Если сходил паук-игрок, после него должны сходить пауки-боты
+            disappearInsects(); // Пропадают насекомые
+            nature.createInsects();
         }
     }
 

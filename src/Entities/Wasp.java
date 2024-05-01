@@ -7,8 +7,15 @@ public class Wasp extends Insect {
     public static final double probabilityToDisappear = 0.3;
     public static final double probabilityToAppear = 0.5;
 
-    public Wasp(WebNode webNode, Web web) {
-        super(webNode, web);
+    public Wasp(WebNode webNode) {
+        super(webNode);
         super.setValue(super.getValue() + 3);
+    }
+    @Override
+    public void disappearFromWeb() {
+        double probability = Math.round(Math.random() * 10)/10.0;
+        if (probability <= probabilityToDisappear){
+            die();
+        }
     }
 }

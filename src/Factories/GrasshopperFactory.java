@@ -7,7 +7,7 @@ public class GrasshopperFactory implements InsectFactory {
     @Override
     public Insect createInsect() {
         if (Math.random() < Grasshopper.probabilityToAppear) {
-            return new Grasshopper(null, null);
+            return new Grasshopper(null);
         }
         return null;
     }

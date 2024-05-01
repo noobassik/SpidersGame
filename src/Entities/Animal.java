@@ -7,14 +7,15 @@ public abstract class Animal {
     protected Web web;
     protected WebNode webNode;
 
-    public Animal(WebNode webNode, Web web) {
-        if (web.getWebNode(webNode.getPosition()).isEmpty()){
+    public Animal(WebNode webNode) {
+        if (webNode.getWeb().getWebNode(webNode.getPosition()).isEmpty()){
             this.webNode = webNode;
             webNode.setAnimal(this);
         }
-        this.web = web;
+        this.web = webNode.getWeb();
     }
 
+    // TODO: должна быть двухстороняя связь
     public WebNode getWebNode() {
         return this.webNode;
     }

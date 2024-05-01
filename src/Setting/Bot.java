@@ -35,7 +35,7 @@ public class Bot {
     }
 
     // TODO: если не будет насекомых, то direction == null
-    public void makeSmartMove() {
+    public void moveAllBots() {
         for (Spider spider : this.botSpiderList) {
             Direction direction = spiderMoveStrategy.findNearestInsect(spider.getWebNode());
             if (direction != null) {

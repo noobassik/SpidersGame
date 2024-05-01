@@ -7,7 +7,7 @@ public class WaspFactory implements InsectFactory {
     @Override
     public Insect createInsect() {
         if (Math.random() < Wasp.probabilityToAppear) {
-            return new Wasp(null, null);
+            return new Wasp(null);
         }
         return null;
     }

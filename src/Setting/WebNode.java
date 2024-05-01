@@ -21,11 +21,11 @@ public class WebNode {
         return this.position;
     }
 
-    private void releaseAnimal() {
-        this.animal.setWebNode(null);
-        this.animal = null;
-    }
+   public Web getWeb(){
+        return this.web;
+   }
 
+    // TODO: должна быть двухстороняя связь
     public Animal getAnimal() {
         return this.animal;
     }
@@ -44,8 +44,11 @@ public class WebNode {
 
     public WebNode getNextWebNode(Direction direction) {
         Point newPos = calcNewPosition(position, direction);
+        // TODO: эта не очень оптимальная штука под капотом сделает webNodes.size() итераций
+        // в писсимистичном случае чтобы достать всего лишь соседнюю клетку
         return web.getWebNode(newPos);
     }
+
 
     // Возвращает массив из двух элементов: индекс строки, индекс столбца
     private Point calcNewPosition(Point position, Direction direct) {

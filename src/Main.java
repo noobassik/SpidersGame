@@ -4,6 +4,8 @@ import Setting.Web;
 import Utils.Game;
 import Utils.SpiderMoveStrategy;
 
+import java.awt.*;
+
 public class Main {
     public static void main(String[] args) {
         Web web = new Web(3);
@@ -12,6 +14,5 @@ public class Main {
         Nature nature = new Nature(web, bot);
         Game game = new Game(nature, bot, web);
         game.startGame();
-
     }
 }

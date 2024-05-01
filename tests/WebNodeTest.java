@@ -11,7 +11,7 @@ public class WebNodeTest {
     @Test
     public void ReleasePlayerSpider() {
         Web web = new Web(3);
-        Spider playerSpider = new Spider(web.getWebNode(new Point(0, 2)), 100, web);
+        Spider playerSpider = new Spider(web.getWebNode(new Point(0, 2)), 100);
         web.addSpider(playerSpider);
         web.setPlayerSpider(playerSpider);
         playerSpider.getWebNode().setAnimal(null);
@@ -23,8 +23,8 @@ public class WebNodeTest {
     @Test
     public void ReleaseBotSpider() {
         Web web = new Web(3);
-        Spider playerSpider = new Spider(web.getWebNode(new Point(0, 2)), 100, web);
-        Spider botSpider = new Spider(web.getWebNode(new Point(0, 1)), 100, web);
+        Spider playerSpider = new Spider(web.getWebNode(new Point(0, 2)), 100);
+        Spider botSpider = new Spider(web.getWebNode(new Point(0, 1)), 100);
         web.addSpider(playerSpider);
         web.setPlayerSpider(playerSpider);
         web.addSpider(botSpider);
@@ -37,7 +37,7 @@ public class WebNodeTest {
     @Test
     public void ReleaseInsect() {
         Web web = new Web(3);
-        Grasshopper grasshopper = new Grasshopper(web.getWebNode(new Point(0, 2)),  web);
+        Grasshopper grasshopper = new Grasshopper(web.getWebNode(new Point(0, 2)));
         web.addInsect(grasshopper);
         grasshopper.getWebNode().setAnimal(null);
         grasshopper.setWebNode(null);
@@ -48,8 +48,8 @@ public class WebNodeTest {
     @Test
     public void InitializeAnimalInOccupiedWebNode() {
         Web web = new Web(3);
-        Grasshopper grasshopper = new Grasshopper(web.getWebNode(new Point(0, 2)),  web);
-        Fly fly = new Fly(web.getWebNode(new Point(0, 2)),  web);
+        Grasshopper grasshopper = new Grasshopper(web.getWebNode(new Point(0, 2)));
+        Fly fly = new Fly(web.getWebNode(new Point(0, 2)));
         web.addInsect(grasshopper);
         web.addInsect(fly); // муха не добавляется никуда и поля null
         Assert.assertEquals(grasshopper, web.getWebNode(new Point(0, 2)).getAnimal());

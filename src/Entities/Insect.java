@@ -10,18 +10,19 @@ import java.util.ArrayList;
 public abstract class Insect extends Animal {
     protected int value;
 
-    public Insect(WebNode webNode, Web web) {
-        super(webNode, web);
+    public Insect(WebNode webNode) {
+        super(webNode);
     }
 
     public int getValue() {
         return this.value;
     }
 
-    public void setValue(int value) {
+    protected void setValue(int value) {
         this.value = value;
     }
 
+    public abstract void disappearFromWeb();
     private ArrayList<InsectActionListener> insectListenersList = new ArrayList<>();
 
     public void addInsectActionListener(InsectActionListener listener) {

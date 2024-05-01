@@ -17,8 +17,8 @@ public class AnimalTest {
         SpiderMoveStrategy spiderMoveStrategy = new SpiderMoveStrategy(web);
         Bot bot = new Bot(spiderMoveStrategy, web);
         Nature nature = new Nature(web, bot);
-        Spider playerSpider = new Spider(web.getWebNode(new Point(0, 0)), 100, web);
-        Spider botSpider = new Spider(web.getWebNode(new Point(0, 1)), 100, web);
+        Spider playerSpider = new Spider(web.getWebNode(new Point(0, 0)), 100);
+        Spider botSpider = new Spider(web.getWebNode(new Point(0, 1)), 100);
 //        nature.generateAnimals();
         web.addSpider(playerSpider);
         web.setPlayerSpider(playerSpider);
@@ -34,8 +34,8 @@ public class AnimalTest {
         SpiderMoveStrategy spiderMoveStrategy = new SpiderMoveStrategy(web);
         Bot bot = new Bot(spiderMoveStrategy, web);
         Nature nature = new Nature(web, bot);
-        Spider playerSpider = new Spider(web.getWebNode(new Point(0, 0)), 100, web);
-        Spider botSpider = new Spider(web.getWebNode(new Point(0, 1)), 100, web);
+        Spider playerSpider = new Spider(web.getWebNode(new Point(0, 0)), 100);
+        Spider botSpider = new Spider(web.getWebNode(new Point(0, 1)), 100);
         web.addSpider(playerSpider);
         web.setPlayerSpider(playerSpider);
         web.addSpider(botSpider);
@@ -51,7 +51,7 @@ public class AnimalTest {
         SpiderMoveStrategy spiderMoveStrategy = new SpiderMoveStrategy(web);
         Bot bot = new Bot(spiderMoveStrategy, web);
         Nature nature = new Nature(web, bot);
-        Insect insect = new Fly(web.getWebNode(new Point(0, 0)), web);
+        Insect insect = new Fly(web.getWebNode(new Point(0, 0)));
         // nature.createAnimal(insect);
         web.addInsect(insect);
        // insect.die();
