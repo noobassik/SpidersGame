@@ -52,6 +52,13 @@ public class Spider extends Animal {
                 }
             }
         }
+        if (isAlive()) {
+            if (this.game.getBot().isBotOwnsSpider(this)){
+                fireBotSpiderMoved();
+            } else{
+                firePlayerMoved();
+            }
+        }
     }
 
 

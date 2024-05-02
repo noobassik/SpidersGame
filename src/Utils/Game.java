@@ -24,9 +24,6 @@ public class Game {
     // TODO: нужны ли вообще обсерверы, листенеры? - да
     public void startGame() {
         this.nature.generateAnimals();
-//        changePlayerSpider(web.getSpiderList().get(0));
-        //this.web.getPlayerSpdier().makeMove(Direction.east());
-//        this.bot.moveAllBots();
 
         web.getPlayerSpider().addPlayerSpiderActionListener(new PlayerSpiderObserver());
 
