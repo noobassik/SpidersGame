@@ -15,7 +15,6 @@ public abstract class Animal {
         this.web = webNode.getWeb();
     }
 
-    // TODO: должна быть двухстороняя связь
     public WebNode getWebNode() {
         return this.webNode;
     }

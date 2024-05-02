@@ -117,9 +117,6 @@ public class Web {
                 if (webNode != null) {
                     webNode.setAnimal(animal);
                 }
-                if (animal != null && webNode.isEmpty()) {
-                    animal.setWebNode(webNode);
-                }
                 break;
             }
         }

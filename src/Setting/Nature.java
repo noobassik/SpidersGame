@@ -33,7 +33,6 @@ public class Nature {
 
     private void placeAnimalInWeb(WebNode webNode, Animal animal) {
         webNode.setAnimal(animal);
-        animal.setWebNode(webNode);
     }
 
     private WebNode getRandomWebNode(ArrayList<WebNode> webNodeList) {

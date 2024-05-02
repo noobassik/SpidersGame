@@ -25,13 +25,15 @@ public class WebNode {
         return this.web;
    }
 
-    // TODO: должна быть двухстороняя связь
     public Animal getAnimal() {
         return this.animal;
     }
 
     public void setAnimal(Animal animal) {
         this.animal = animal;
+        if (animal != null){
+            this.animal.setWebNode(this);
+        }
     }
 
     public boolean isEmpty() {

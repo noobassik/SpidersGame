@@ -47,15 +47,11 @@ public class Spider extends Animal {
                     moveToNextNode(nextWebNode);
                 } else if (nextWebNode.getAnimal() instanceof Insect) {
                     setHealth(this.health + ((Insect) nextWebNode.getAnimal()).getValue());
-                    //nextWebNode.releaseAnimal();
                     nextWebNode.getAnimal().die();
                     moveToNextNode(nextWebNode);
                 }
             }
-        } else {
-            setHealth(this.health - 1);
         }
-
     }
 
 
@@ -68,7 +64,6 @@ public class Spider extends Animal {
         this.webNode.setAnimal(null);
         this.setWebNode(null);
         nextWebNode.setAnimal(this);
-        setWebNode(nextWebNode);
     }
 
     private boolean eatInsect(Insect insect) {
@@ -83,7 +78,10 @@ public class Spider extends Animal {
         this.setWebNode(null);
         if (this == web.getPlayerSpider()) {
             super.web.setPlayerSpider(null);
+            firePlayerDied();
             this.game.changePlayerSpider(this); //TODO: game is null, верная ли связь - через обсервер
+        } else {
+            fireBotSpiderDied();
         }
         super.web = null;
         setWebNode(null);
