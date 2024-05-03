@@ -15,16 +15,20 @@ public class Game {
     private Web web;
     private Bot bot;
 
-    public Game(Nature nature, Bot bot, Web web) {
+    public Game() {
+        Web web = new Web(3);
+        SpiderMoveStrategy spiderMoveStrategy = new SpiderMoveStrategy(web);
+        Bot bot = new Bot(spiderMoveStrategy, web);
+        Nature nature = new Nature(web, bot);
+        this.web = web;
         this.nature = nature;
         this.bot = bot;
-        this.web = web;
+        startGame();
     }
 
-    // TODO: нужны ли вообще обсерверы, листенеры? - да
     public void startGame() {
         this.nature.generateAnimals();
-
+        this.web.getPlayerSpider().setGame(this);
         web.getPlayerSpider().addPlayerSpiderActionListener(new PlayerSpiderObserver());
 
         for (Spider botSpider : bot.getBotSpiderList()){
@@ -39,7 +43,10 @@ public class Game {
     public void endGame() {
         System.out.println("The end");
         fireGameEnded();
-        System.exit(0);
+    }
+
+    public Web getWeb(){
+        return this.web;
     }
 
     public Bot getBot() {
@@ -74,9 +81,10 @@ public class Game {
 
         @Override
         public void playerMoved(PlayerActionEvent event) {
-            bot.moveAllBots(); // Если сходил паук-игрок, после него должны сходить пауки-боты
-            disappearInsects(); // Пропадают насекомые
-            nature.createInsects();
+//            bot.moveAllBots(); // Если сходил паук-игрок, после него должны сходить пауки-боты
+//            disappearInsects(); // Пропадают насекомые
+//            nature.createInsects();
+            fireGameStepHappened();
         }
     }
 
@@ -103,7 +111,7 @@ public class Game {
         @Override
         public void insectWasEaten(InsectActionEvent event) {
             insectsToRemove.add(event.getInsect());
-//            web.removeInsect(insectsToRemove);
+            web.removeInsects(insectsToRemove);
             insectsToRemove.clear();
         }
     }
@@ -124,6 +132,23 @@ public class Game {
             GameActionEvent event = new GameActionEvent(listener);
             event.setGame(this);
             listener.gameEnded(event);
+        }
+    }
+
+    protected void fireGameStepHappened(){
+        for(GameActionListener listener : gameListeners){
+            GameActionEvent event = new GameActionEvent(listener);
+            event.setGame(this);
+            listener.gameStepHappened(event);
+        }
+    }
+
+    protected void fireInsectsAppeared(ArrayList<Insect> createdInsects){
+        for (GameActionListener listener : gameListeners){
+            GameActionEvent event = new GameActionEvent(listener);
+            event.setCreatedInsects(createdInsects);
+            event.setGame(this);
+            listener.insectsCreated(event);
         }
     }
 

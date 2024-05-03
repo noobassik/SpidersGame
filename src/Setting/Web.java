@@ -79,6 +79,18 @@ public class Web {
         }
     }
 
+    public void removeInsects(ArrayList<Insect> inscets) {
+        if (!this.insectList.isEmpty()){
+            for (var insect : inscets){
+                if (!this.insectList.contains(insect)){
+                    return;
+                }
+                insect.disappearFromWeb();
+            }
+            this.insectList.removeAll(inscets);
+        }
+    }
+
     public void removeSpider(Animal animal) {
         if (animal instanceof Spider) {
             spiderList.remove(animal);

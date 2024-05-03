@@ -1,11 +1,16 @@
 package Events;
 
+import Entities.Insect;
 import Utils.Game;
+
+import java.util.ArrayList;
 import java.util.EventObject;
 
 public class GameActionEvent extends EventObject {
 
     private Game game;
+
+    private ArrayList<Insect> createdInsects;
 
     public void setGame(Game game){
         this.game = game;
@@ -13,6 +18,13 @@ public class GameActionEvent extends EventObject {
 
     public Game getGame(){
         return this.game;
+    }
+
+    public void setCreatedInsects(ArrayList<Insect> createdInsects){
+        this.createdInsects =createdInsects;
+    }
+    public ArrayList<Insect> getCreatedInsects(){
+        return this.createdInsects;
     }
 
     /**

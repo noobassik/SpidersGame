@@ -2,9 +2,10 @@ package Entities;
 
 import Events.BotSpiderActionEvent;
 import Events.BotSpiderActionListener;
+import Events.Controllers.SpiderControllerActionEvent;
+import Events.Controllers.SpiderControllerActionListener;
 import Events.PlayerActionEvent;
 import Events.PlayerActionListener;
-import Setting.Web;
 import Setting.WebNode;
 import Utils.Direction;
 import Utils.Game;
@@ -19,6 +20,11 @@ public class Spider extends Animal {
     public Spider(WebNode webNode, int health) {
         super(webNode);
         this.health = health;
+
+    }
+
+    public void setGame(Game game){
+        this.game = game;
     }
 
     public int getHealth() {
@@ -30,18 +36,19 @@ public class Spider extends Animal {
     }
 
     public boolean isAlive() {
-        return this.health == 0;
+        return this.health != 0;
     }
 
     public void makeMove(Direction direction) {
         setHealth(this.health - 1);
-        if (isAlive()) {
+        if (!isAlive()) {
             this.die();
             return;
         }
+        WebNode nextWebNode = webNode.getNextWebNode(direction);
+        WebNode oldWebNode = this.getWebNode();
         ListIterator<WebNode> iterator = (ListIterator<WebNode>) web.getWebNodes().iterator();
         if (iterator.hasNext()) {
-            WebNode nextWebNode = webNode.getNextWebNode(direction);
             if (nextWebNode != null) {
                 if (nextWebNode.getAnimal() == null) {
                     moveToNextNode(nextWebNode);
@@ -53,14 +60,14 @@ public class Spider extends Animal {
             }
         }
         if (isAlive()) {
-            if (this.game.getBot().isBotOwnsSpider(this)){
+            if (!this.game.getBot().isBotOwnsSpider(this)) {
                 fireBotSpiderMoved();
-            } else{
+            } else {
+                fireSpiderMovedController(oldWebNode, nextWebNode);
                 firePlayerMoved();
             }
         }
     }
-
 
 
     public boolean isValid() {
@@ -111,16 +118,16 @@ public class Spider extends Animal {
         playerSpiderListenerList.remove(listener);
     }
 
-    protected void firePlayerMoved(){
-        for(PlayerActionListener listener : playerSpiderListenerList){
+    protected void firePlayerMoved() {
+        for (PlayerActionListener listener : playerSpiderListenerList) {
             PlayerActionEvent event = new PlayerActionEvent(listener);
             event.setPlayerSpider(this);
             listener.playerMoved(event);
         }
     }
 
-    protected void firePlayerDied(){
-        for(PlayerActionListener listener : playerSpiderListenerList){
+    protected void firePlayerDied() {
+        for (PlayerActionListener listener : playerSpiderListenerList) {
             PlayerActionEvent event = new PlayerActionEvent(listener);
             event.setPlayerSpider(this);
             listener.playerDied(event);
@@ -135,19 +142,40 @@ public class Spider extends Animal {
         botSpiderListenerList.remove(listener);
     }
 
-    protected void fireBotSpiderMoved(){
-        for(BotSpiderActionListener listener : botSpiderListenerList){
+    protected void fireBotSpiderMoved() {
+        for (BotSpiderActionListener listener : botSpiderListenerList) {
             BotSpiderActionEvent event = new BotSpiderActionEvent(listener);
             event.setBotSpider(this);
             listener.botMoved(event);
         }
     }
 
-    protected void fireBotSpiderDied(){
-        for(BotSpiderActionListener listener : botSpiderListenerList){
+    protected void fireBotSpiderDied() {
+        for (BotSpiderActionListener listener : botSpiderListenerList) {
             BotSpiderActionEvent event = new BotSpiderActionEvent(listener);
             event.setBotSpider(this);
             listener.botDied(event);
         }
     }
+
+    private ArrayList<SpiderControllerActionListener> spiderControllerListenersList = new ArrayList<>();
+
+    public void addSpiderControllerActionListener(SpiderControllerActionListener listener) {
+        spiderControllerListenersList.add(listener);
+    }
+
+    public void removeSpiderControllerActionListener(SpiderControllerActionListener listener) {
+        spiderControllerListenersList.remove(listener);
+    }
+
+    protected void fireSpiderMovedController(WebNode from, WebNode to) {
+        for (SpiderControllerActionListener listener : spiderControllerListenersList) {
+            SpiderControllerActionEvent event = new SpiderControllerActionEvent(listener);
+            event.setSpider(this);
+            event.setFrom(from);
+            event.setTo(to);
+            listener.spiderMoved(event);
+        }
+    }
+
 }
