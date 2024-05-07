@@ -26,7 +26,7 @@ public class Nature {
 
     public void generateAnimals() {
         createInsects();
-        Spider playerSpider = new Spider(web.getEmptyWebNodes().get(0), 100);
+        Spider playerSpider = new Spider(web.getEmptyWebNodes().get(0), 3);
         web.addSpider(playerSpider);
         web.addSpider(new Spider(web.getEmptyWebNodes().get(1), 100));
         web.setPlayerSpider(playerSpider);
@@ -41,21 +41,23 @@ public class Nature {
         return webNodeList.get((int) (Math.random() * (webNodeList.size() - 1)));
     }
 
-    public void createInsects() {
+    public ArrayList<Insect> createInsects() {
+        ArrayList <Insect> createdInsects = new ArrayList<>();
         for (InsectFactory factory : factories) {
             ArrayList<WebNode> emptyWebNodes = this.web.getEmptyWebNodes();
             if (emptyWebNodes.isEmpty()) {
-                return;
+                return null;
             }
             Insect insect = factory.createInsect();
             if (insect != null) {
                 placeAnimalInWeb(getRandomWebNode(emptyWebNodes), insect);
                 this.web.addInsect(insect);
                 insect.setWeb(web);
+                createdInsects.add(insect);
             }
         }
+        return createdInsects;
     }
-
 //    private final Map insects = { 'waps': new Wasp }
 //    public static final int maxAmountOfInsects = 5;
 //    public void generateInsects(ArrayList<AbstractInsectFactory> factories) {

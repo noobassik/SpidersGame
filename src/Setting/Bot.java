@@ -5,6 +5,7 @@ import Utils.Direction;
 import Utils.SpiderMoveStrategy;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Bot {
     private Web web;
@@ -22,7 +23,7 @@ public class Bot {
 
     public void addSpiders(ArrayList<Spider> spiders) {
         for (Spider spider : spiders) {
-            if (!this.botSpiderList.contains(spider)){
+            if (!this.botSpiderList.contains(spider) && this.web.getPlayerSpider() != spider){
                 botSpiderList.add(spider);
             }
         }

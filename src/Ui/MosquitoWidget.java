@@ -7,8 +7,8 @@ public class MosquitoWidget extends InsectWidget{
 
     private Mosquito mosquito;
 
-    public MosquitoWidget(Mosquito mole){
+    public MosquitoWidget(Mosquito mosquito){
         super("images/mosquito.png", (int) (CELL_SIZE/2.6), (int) (CELL_SIZE/1.58));
-        mosquito = mole;
+        this.mosquito = mosquito;
     }
 }

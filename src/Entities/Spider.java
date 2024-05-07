@@ -11,7 +11,6 @@ import Utils.Direction;
 import Utils.Game;
 
 import java.util.ArrayList;
-import java.util.ListIterator;
 
 public class Spider extends Animal {
     private Game game;
@@ -23,7 +22,7 @@ public class Spider extends Animal {
 
     }
 
-    public void setGame(Game game){
+    public void setGame(Game game) {
         this.game = game;
     }
 
@@ -45,25 +44,27 @@ public class Spider extends Animal {
             this.die();
             return;
         }
-        WebNode nextWebNode = webNode.getNextWebNode(direction);
         WebNode oldWebNode = this.getWebNode();
-        ListIterator<WebNode> iterator = (ListIterator<WebNode>) web.getWebNodes().iterator();
-        if (iterator.hasNext()) {
-            if (nextWebNode != null) {
-                if (nextWebNode.getAnimal() == null) {
-                    moveToNextNode(nextWebNode);
-                } else if (nextWebNode.getAnimal() instanceof Insect) {
-                    setHealth(this.health + ((Insect) nextWebNode.getAnimal()).getValue());
-                    nextWebNode.getAnimal().die();
-                    moveToNextNode(nextWebNode);
-                }
+        WebNode newWebNode = oldWebNode;
+
+        WebNode nextWebNode = webNode.getNextWebNode(direction);
+        if (nextWebNode != null) {
+            if (nextWebNode.getAnimal() == null) {
+                moveToNextNode(nextWebNode);
+                newWebNode = nextWebNode;
+            } else if (nextWebNode.getAnimal() instanceof Insect) {
+                setHealth(this.health + ((Insect) nextWebNode.getAnimal()).getValue());
+                nextWebNode.getAnimal().die();
+                moveToNextNode(nextWebNode);
+                newWebNode = nextWebNode;
             }
         }
         if (isAlive()) {
-            if (!this.game.getBot().isBotOwnsSpider(this)) {
+            if (this.game.getBot().isBotOwnsSpider(this)) {
+                fireSpiderMovedController(oldWebNode, newWebNode);
                 fireBotSpiderMoved();
             } else {
-                fireSpiderMovedController(oldWebNode, nextWebNode);
+                fireSpiderMovedController(oldWebNode, newWebNode);
                 firePlayerMoved();
             }
         }
@@ -87,13 +88,14 @@ public class Spider extends Animal {
     @Override
     protected void die() {
         this.health = 0;
+        fireAnimalDiedController(this.webNode);
         super.web.removeSpider(this);
         super.webNode.setAnimal(null);
         this.setWebNode(null);
         if (this == web.getPlayerSpider()) {
             super.web.setPlayerSpider(null);
             firePlayerDied();
-            this.game.changePlayerSpider(this); //TODO: game is null, верная ли связь - через обсервер
+            //TODO: game is null, верная ли связь - через обсервер
         } else {
             fireBotSpiderDied();
         }

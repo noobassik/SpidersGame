@@ -41,17 +41,17 @@ public class WebWidget extends JPanel {
         row.setLayout(new BoxLayout(row, BoxLayout.X_AXIS));
 
         for (int i = 0; i < web.getSize(); i++) {
-            WebNode webCross = web.getWebNode(new Point(rowIndex, i));
-            WebNodeWidget webCrossWidget = widgetFactory.create(webCross);
+            WebNode webNode = web.getWebNode(new Point(rowIndex, i));
+            WebNodeWidget webNodeWidget = widgetFactory.create(webNode);
 
-            row.add(webCrossWidget);
+            row.add(webNodeWidget);
         }
         return row;
     }
 
     private void subscribeOnEntities() {
-//        web.getPlayerSpider().addAnimalControllerActionListener(new AnimalController());
-//        web.getPlayerSpider().addSpiderControllerActionListener(new SpiderController());
+        web.getPlayerSpider().addAnimalControllerActionListener(new AnimalController());
+        web.getPlayerSpider().addSpiderControllerActionListener(new SpiderController());
 
         for (Spider bot : game.getBot().getBotSpiderList()){
             bot.addAnimalControllerActionListener(new AnimalController());
@@ -70,9 +70,9 @@ public class WebWidget extends JPanel {
         public void animalDied(AnimalControllerActionEvent event) {
             Animal animal = event.getAnimal();
             AnimalWidget animalWidget = widgetFactory.getWidget(animal);
-            WebNodeWidget webCrossWidget = widgetFactory.getWidget(event.getWebNode());
+            WebNodeWidget webNodeWidget = widgetFactory.getWidget(event.getWebNode());
 
-            webCrossWidget.removeItem(animalWidget);
+            webNodeWidget.removeItem(animalWidget);
             widgetFactory.remove(animal);
         }
     }

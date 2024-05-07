@@ -1,5 +1,7 @@
 package Utils;
 
+import java.util.Random;
+
 /*
  * Utils.Direction - абстракция направления в системе координат "север-юг-восток-запад";
  * позволяет сравнивать направления и порождать новые направления относительно
@@ -34,6 +36,23 @@ public class Direction {
 
     public static Direction west() {
         return new Direction(180);
+    }
+
+    public Direction getRandomDirection() {
+        Random random = new Random();
+        int randomIndex = random.nextInt(4); // 4 possible directions
+        switch (randomIndex) {
+            case 0:
+                return north();
+            case 1:
+                return south();
+            case 2:
+                return east();
+            case 3:
+                return west();
+            default:
+                throw new IllegalStateException("Unexpected value: " + randomIndex);
+        }
     }
 
 

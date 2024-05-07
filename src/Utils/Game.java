@@ -16,7 +16,7 @@ public class Game {
     private Bot bot;
 
     public Game() {
-        Web web = new Web(3);
+        Web web = new Web(6);
         SpiderMoveStrategy spiderMoveStrategy = new SpiderMoveStrategy(web);
         Bot bot = new Bot(spiderMoveStrategy, web);
         Nature nature = new Nature(web, bot);
@@ -28,7 +28,9 @@ public class Game {
 
     public void startGame() {
         this.nature.generateAnimals();
-        this.web.getPlayerSpider().setGame(this);
+        for (Spider spider : this.web.getSpiderList()){
+            spider.setGame(this);
+        }
         web.getPlayerSpider().addPlayerSpiderActionListener(new PlayerSpiderObserver());
 
         for (Spider botSpider : bot.getBotSpiderList()){
@@ -53,7 +55,7 @@ public class Game {
         return this.bot;
     }
     // TODO: это точно не public
-    public void changePlayerSpider(Spider spider) {
+    private void changePlayerSpider() {
         int index = new Random().nextInt(bot.getBotSpiderList().size());
         web.setPlayerSpider(bot.getBotSpiderList().get(index));
         bot.deleteSpiderFromList(index);
@@ -69,6 +71,14 @@ public class Game {
         insectsToRemove.clear();
     }
 
+    private void generateInsects(){
+        ArrayList<Insect> createdInsects = nature.createInsects();
+        for (Insect insect : createdInsects){
+            insect.addInsectActionListener(new InsectObserver());
+        }
+        fireInsectsAppeared(createdInsects);
+    }
+
     private ArrayList<Spider> spidersToRemove = new ArrayList<>();
     private ArrayList<Insect> insectsToRemove = new ArrayList<>();
 
@@ -76,14 +86,19 @@ public class Game {
     private class PlayerSpiderObserver implements PlayerActionListener {
         @Override
         public void playerDied(PlayerActionEvent event) {
-            endGame();
+            if (web.getSpiderList().size() == 0){
+                endGame();
+            } else {
+                spidersToRemove.add(event.getPlayerSpider());
+                changePlayerSpider();
+            }
         }
 
         @Override
         public void playerMoved(PlayerActionEvent event) {
-//            bot.moveAllBots(); // Если сходил паук-игрок, после него должны сходить пауки-боты
-//            disappearInsects(); // Пропадают насекомые
-//            nature.createInsects();
+            bot.moveAllBots(); // Если сходил паук-игрок, после него должны сходить пауки-боты
+            disappearInsects(); // Пропадают насекомые
+            generateInsects();
             fireGameStepHappened();
         }
     }

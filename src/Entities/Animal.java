@@ -21,6 +21,10 @@ public abstract class Animal {
         }
     }
 
+    public boolean isPlayer(){
+        return this.web.getPlayerSpider() == this;
+    }
+
     public void setWeb(Web web){
         this.web = web;
     }
