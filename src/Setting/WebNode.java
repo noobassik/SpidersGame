@@ -5,6 +5,7 @@ import Utils.Direction;
 
 import java.awt.*;
 import java.util.HashMap;
+import java.util.Map;
 
 public class WebNode {
     private Web web;
@@ -16,7 +17,29 @@ public class WebNode {
         this.web = web;
         this.position = position;
     }
+    private final Map<Direction, WebNode> neighbours = new HashMap<>();
 
+    public WebNode neighbour(Direction direction) {
+        if (neighbours.containsKey(direction)) {
+            return neighbours.get(direction);
+        }
+        return null;
+    }
+
+    void setNeighbour(Direction direction, WebNode neighbour) {
+        if (neighbour != this && !isNeighbour(neighbour)) {
+            neighbours.put(direction, neighbour);
+            neighbour.setNeighbour(direction.opposite(), this);
+        }
+    }
+
+    public boolean isNeighbour(WebNode other) {
+        return neighbours.containsValue(other);
+    }
+
+    public boolean hasNeighbour(Direction direction) {
+        return neighbours.containsKey(direction);
+    }
     public Point getPosition() {
         return this.position;
     }

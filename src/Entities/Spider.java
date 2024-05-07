@@ -47,7 +47,7 @@ public class Spider extends Animal {
         WebNode oldWebNode = this.getWebNode();
         WebNode newWebNode = oldWebNode;
 
-        WebNode nextWebNode = webNode.getNextWebNode(direction);
+        WebNode nextWebNode = webNode.neighbour(direction);
         if (nextWebNode != null) {
             if (nextWebNode.getAnimal() == null) {
                 moveToNextNode(nextWebNode);
@@ -71,18 +71,10 @@ public class Spider extends Animal {
     }
 
 
-    public boolean isValid() {
-        return true;
-    }
-
     private void moveToNextNode(WebNode nextWebNode) {
         this.webNode.setAnimal(null);
         this.setWebNode(null);
         nextWebNode.setAnimal(this);
-    }
-
-    private boolean eatInsect(Insect insect) {
-        return true;
     }
 
     @Override

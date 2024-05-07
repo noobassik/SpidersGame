@@ -3,6 +3,7 @@ package Setting;
 import Entities.Animal;
 import Entities.Insect;
 import Entities.Spider;
+import Utils.Direction;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -40,6 +41,26 @@ public class Web {
                 webNodes.add(next);
             }
         }
+
+        for (int i = 0; i < this.size; i++) {
+            for (int j = 0; j < this.size; j++) {
+                WebNode webNode = getWebNode(new Point(i, j));
+
+                if (this.size > 1 && i < this.size - 1) {
+                    webNode.setNeighbour(Direction.south(), getWebNode(new Point(i + 1, j)));
+                }
+                if (i > 0) {
+                    webNode.setNeighbour(Direction.north(), getWebNode(new Point(i - 1, j)));
+                }
+                if (this.size > 1 && j < this.size - 1) {
+                    webNode.setNeighbour(Direction.east(), getWebNode(new Point(i, j + 1)));
+                }
+                if (j > 0) {
+                    webNode.setNeighbour(Direction.west(), getWebNode(new Point(i, j - 1)));
+                }
+
+            }
+        }
     }
 
     public LinkedList<WebNode> getWebNodes() {
@@ -51,9 +72,7 @@ public class Web {
     }
 
     public void setPlayerSpider(Spider spider) {
-        if (this.playerSpider == null){
-            this.playerSpider = spider;
-        }
+        this.playerSpider = spider;
     }
 
     public Spider getPlayerSpider() {
@@ -80,9 +99,9 @@ public class Web {
     }
 
     public void removeInsects(ArrayList<Insect> inscets) {
-        if (!this.insectList.isEmpty()){
-            for (var insect : inscets){
-                if (!this.insectList.contains(insect)){
+        if (!this.insectList.isEmpty()) {
+            for (var insect : inscets) {
+                if (!this.insectList.contains(insect)) {
                     return;
                 }
                 insect.disappearFromWeb();
@@ -124,8 +143,8 @@ public class Web {
     }
 
     private void setAnimalToWebNode(Animal animal, Point position) {
-        for (WebNode webNode : webNodes){
-            if (webNode.getPosition().equals(position)){
+        for (WebNode webNode : webNodes) {
+            if (webNode.getPosition().equals(position)) {
                 if (webNode != null) {
                     webNode.setAnimal(animal);
                 }
