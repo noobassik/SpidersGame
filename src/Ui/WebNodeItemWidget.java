@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 public abstract class WebNodeItemWidget extends JPanel {
-
+    // TODO: сюда (?) надо переместить логику перемещения бота
     protected BufferedImage image;
 
     public WebNodeItemWidget(String imagePath, int imageWidth, int imageHeight) {

@@ -32,8 +32,9 @@ public class Game {
             spider.setGame(this);
         }
         web.getPlayerSpider().addPlayerSpiderActionListener(new PlayerSpiderObserver());
-
+        web.getPlayerSpider().addBotSpiderActionListener(new BotSpiderObserver());
         for (Spider botSpider : bot.getBotSpiderList()){
+            botSpider.addPlayerSpiderActionListener(new PlayerSpiderObserver());
             botSpider.addBotSpiderActionListener(new BotSpiderObserver());
         }
 

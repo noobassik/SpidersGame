@@ -15,7 +15,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class WebWidget extends JPanel {
-
     private final Web web;
     private final WidgetFactory widgetFactory;
     private final Game game;
@@ -50,10 +49,10 @@ public class WebWidget extends JPanel {
     }
 
     private void subscribeOnEntities() {
-        web.getPlayerSpider().addAnimalControllerActionListener(new AnimalController());
-        web.getPlayerSpider().addSpiderControllerActionListener(new SpiderController());
+//        web.getPlayerSpider().addAnimalControllerActionListener(new AnimalController());
+//        web.getPlayerSpider().addSpiderControllerActionListener(new SpiderController());
 
-        for (Spider bot : game.getBot().getBotSpiderList()){
+        for (Spider bot : web.getSpiderList()){
             bot.addAnimalControllerActionListener(new AnimalController());
             bot.addSpiderControllerActionListener(new SpiderController());
         }
@@ -87,6 +86,15 @@ public class WebWidget extends JPanel {
             webNodeWidgetFrom.removeItem(spiderWidget);
             webNodeWidgetTo.addItem(spiderWidget);
         }
+
+        @Override
+        public void spiderDied(SpiderControllerActionEvent event) {
+            AnimalWidget spiderWidget = widgetFactory.getWidget(event.getSpider());
+            WebNodeWidget webNodeWidgetFrom = widgetFactory.getWidget(event.getFrom());
+
+            webNodeWidgetFrom.removeItem(spiderWidget);
+        }
+
     }
 
     private class GameStepObserver implements GameActionListener{

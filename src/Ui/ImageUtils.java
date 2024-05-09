@@ -15,5 +15,5 @@ public class ImageUtils {
         return bufferedImage;
     }
 
-    public static final Color BACKGROUND_COLOR = Color.white;
+    public static final Color BACKGROUND_COLOR = Color.lightGray;
 }

@@ -35,10 +35,6 @@ public class WidgetFactory {
         return (PlayerSpiderWidget) animals.get(playerSpider);
     }
 
-    public BotSpiderWidget getBotSpiderWidget(Spider botSpider){
-        return (BotSpiderWidget) animals.get(botSpider);
-    }
-
     public InsectWidget getWidget(Insect insect) {
         return (InsectWidget) animals.get(insect);
     }
@@ -73,15 +69,15 @@ public class WidgetFactory {
         return animalWidget;
     }
 
-    private AnimalWidget createSpider(Animal animal){
-        if (animal.isPlayer()){
-            return new PlayerSpiderWidget((Spider) animal);
-        } else return new BotSpiderWidget((Spider) animal);
-    }
+//    private AnimalWidget createSpider(Animal animal){
+//        if (animal.isPlayer()){
+//            return new PlayerSpiderWidget((Spider) animal);
+//        } else return new BotSpiderWidget((Spider) animal);
+//    }
 
     private AnimalWidget createWidget(Animal animal){
         return switch (animal.getClass().getName().split("\\.")[animal.getClass().getName().split("\\.").length - 1]) {
-            case "Spider" -> createSpider(animal);
+            case "Spider" -> new PlayerSpiderWidget((Spider) animal);
             case "Fly" -> new FlyWidget((Fly)animal);
             case "Mosquito" -> new MosquitoWidget((Mosquito) animal);
             case "Grasshopper" -> new GrasshopperWidget((Grasshopper)animal);

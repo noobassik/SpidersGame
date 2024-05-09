@@ -43,6 +43,7 @@ public class Bot {
                 spider.makeMove(direction);
             }
         }
+
     }
 
     public boolean isBotOwnsSpider(Spider spider) {

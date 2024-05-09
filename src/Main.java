@@ -30,6 +30,7 @@ public class Main {
             widgetFactory.getPlayerSpiderWidget(game.getWeb().getPlayerSpider()).requestFocus();
 
             pack();
+            setLocationRelativeTo(null);
             setResizable(false);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
         }

@@ -1,5 +1,6 @@
 package Ui;
 import Entities.Spider;
+import Setting.Web;
 import Utils.Direction;
 
 import java.awt.*;
@@ -10,7 +11,7 @@ import java.awt.image.BufferedImage;
 import static Ui.WebNodeWidget.CELL_SIZE;
 public class PlayerSpiderWidget extends AnimalWidget {
 
-    private final Spider playerSpider;
+    private Spider playerSpider;
 
     public PlayerSpiderWidget(Spider playerSpider) {
         super("images/spider.png", CELL_SIZE / 2, CELL_SIZE - 24);
@@ -50,9 +51,9 @@ public class PlayerSpiderWidget extends AnimalWidget {
         private void moveAction(int keyCode) {
             Direction direction = directionByKeyCode(keyCode);
             if (direction != null) {
+                Web web = playerSpider.getWebNode().getWeb();
                 playerSpider.makeMove(direction);
-                System.out.println(playerSpider.getWebNode().getPosition());
-                System.out.println(playerSpider.getHealth());
+                playerSpider = web.getPlayerSpider();
                 requestFocus();
             }
         }

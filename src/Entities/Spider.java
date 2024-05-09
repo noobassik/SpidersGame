@@ -80,7 +80,7 @@ public class Spider extends Animal {
     @Override
     protected void die() {
         this.health = 0;
-        fireAnimalDiedController(this.webNode);
+        fireSpiderDiedController(this.webNode);
         super.web.removeSpider(this);
         super.webNode.setAnimal(null);
         this.setWebNode(null);
@@ -111,13 +111,14 @@ public class Spider extends Animal {
     public void removePlayerSpiderActionListener(PlayerActionListener listener) {
         playerSpiderListenerList.remove(listener);
     }
-
+    // TODO: в потоковую функцию
     protected void firePlayerMoved() {
-        for (PlayerActionListener listener : playerSpiderListenerList) {
+        playerSpiderListenerList.stream().forEach(listener -> {
             PlayerActionEvent event = new PlayerActionEvent(listener);
             event.setPlayerSpider(this);
             listener.playerMoved(event);
-        }
+
+        });
     }
 
     protected void firePlayerDied() {
@@ -169,6 +170,15 @@ public class Spider extends Animal {
             event.setFrom(from);
             event.setTo(to);
             listener.spiderMoved(event);
+        }
+    }
+
+    protected void fireSpiderDiedController(WebNode from) {
+        for (SpiderControllerActionListener listener : spiderControllerListenersList) {
+            SpiderControllerActionEvent event = new SpiderControllerActionEvent(listener);
+            event.setSpider(this);
+            event.setFrom(from);
+            listener.spiderDied(event);
         }
     }
 
