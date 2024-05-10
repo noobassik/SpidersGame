@@ -53,6 +53,11 @@ public class Main {
 
             }
 
+            @Override
+            public void playerChanged(GameActionEvent event) {
+
+            }
+
         }
     }
 }

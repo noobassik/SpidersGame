@@ -35,7 +35,7 @@ public class Spider extends Animal {
     }
 
     public boolean isAlive() {
-        return this.health != 0;
+        return this.health > 0;
     }
 
     public void makeMove(Direction direction) {
@@ -46,7 +46,6 @@ public class Spider extends Animal {
         }
         WebNode oldWebNode = this.getWebNode();
         WebNode newWebNode = oldWebNode;
-
         WebNode nextWebNode = webNode.neighbour(direction);
         if (nextWebNode != null) {
             if (nextWebNode.getAnimal() == null) {
@@ -59,7 +58,8 @@ public class Spider extends Animal {
                 newWebNode = nextWebNode;
             }
         }
-        if (isAlive()) {
+
+//        if (isAlive()) {
             if (this.game.getBot().isBotOwnsSpider(this)) {
                 fireSpiderMovedController(oldWebNode, newWebNode);
                 fireBotSpiderMoved();
@@ -67,7 +67,7 @@ public class Spider extends Animal {
                 fireSpiderMovedController(oldWebNode, newWebNode);
                 firePlayerMoved();
             }
-        }
+//        }
     }
 
 
@@ -87,12 +87,11 @@ public class Spider extends Animal {
         if (this == web.getPlayerSpider()) {
             super.web.setPlayerSpider(null);
             firePlayerDied();
-            //TODO: game is null, верная ли связь - через обсервер
         } else {
             fireBotSpiderDied();
         }
         super.web = null;
-        setWebNode(null);
+        this.game = null;
     }
 
     @Override
@@ -111,6 +110,7 @@ public class Spider extends Animal {
     public void removePlayerSpiderActionListener(PlayerActionListener listener) {
         playerSpiderListenerList.remove(listener);
     }
+
     // TODO: в потоковую функцию
     protected void firePlayerMoved() {
         playerSpiderListenerList.stream().forEach(listener -> {

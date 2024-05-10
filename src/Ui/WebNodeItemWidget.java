@@ -22,13 +22,13 @@ public abstract class WebNodeItemWidget extends JPanel {
         return image;
     }
 
-    private void updateState() {
+    protected void updateState() {
         setPreferredSize(getDimension());
         repaint();
         revalidate();
     }
 
-    private void setImage(String path, int width, int height) {
+    protected void setImage(String path, int width, int height) {
         BufferedImage image = null;
         try {
             image = ImageIO.read(new File(path));

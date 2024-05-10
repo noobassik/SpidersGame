@@ -69,12 +69,6 @@ public class WidgetFactory {
         return animalWidget;
     }
 
-//    private AnimalWidget createSpider(Animal animal){
-//        if (animal.isPlayer()){
-//            return new PlayerSpiderWidget((Spider) animal);
-//        } else return new BotSpiderWidget((Spider) animal);
-//    }
-
     private AnimalWidget createWidget(Animal animal){
         return switch (animal.getClass().getName().split("\\.")[animal.getClass().getName().split("\\.").length - 1]) {
             case "Spider" -> new PlayerSpiderWidget((Spider) animal);

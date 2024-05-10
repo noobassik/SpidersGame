@@ -3,12 +3,14 @@ package Ui;
 import Entities.Animal;
 import Entities.Insect;
 import Entities.Spider;
-import Events.*;
 import Events.Controllers.AnimalControllerActionEvent;
 import Events.Controllers.AnimalControllerActionListener;
 import Events.Controllers.SpiderControllerActionEvent;
 import Events.Controllers.SpiderControllerActionListener;
-import Setting.*;
+import Events.GameActionEvent;
+import Events.GameActionListener;
+import Setting.Web;
+import Setting.WebNode;
 import Utils.Game;
 
 import javax.swing.*;
@@ -52,19 +54,19 @@ public class WebWidget extends JPanel {
 //        web.getPlayerSpider().addAnimalControllerActionListener(new AnimalController());
 //        web.getPlayerSpider().addSpiderControllerActionListener(new SpiderController());
 
-        for (Spider bot : web.getSpiderList()){
+        for (Spider bot : web.getSpiderList()) {
             bot.addAnimalControllerActionListener(new AnimalController());
             bot.addSpiderControllerActionListener(new SpiderController());
         }
 
-        for (Insect insect : web.getInsectList()){
+        for (Insect insect : web.getInsectList()) {
             insect.addAnimalControllerActionListener(new AnimalController());
         }
 
         game.addGameActionListener(new GameStepObserver());
     }
 
-    private class AnimalController implements AnimalControllerActionListener{
+    private class AnimalController implements AnimalControllerActionListener {
         @Override
         public void animalDied(AnimalControllerActionEvent event) {
             Animal animal = event.getAnimal();
@@ -76,7 +78,7 @@ public class WebWidget extends JPanel {
         }
     }
 
-    private class SpiderController implements SpiderControllerActionListener{
+    private class SpiderController implements SpiderControllerActionListener {
         @Override
         public void spiderMoved(SpiderControllerActionEvent event) {
             AnimalWidget spiderWidget = widgetFactory.getWidget(event.getSpider());
@@ -94,10 +96,9 @@ public class WebWidget extends JPanel {
 
             webNodeWidgetFrom.removeItem(spiderWidget);
         }
-
     }
 
-    private class GameStepObserver implements GameActionListener{
+    private class GameStepObserver implements GameActionListener {
 
         @Override
         public void gameEnded(GameActionEvent event) {
@@ -111,12 +112,18 @@ public class WebWidget extends JPanel {
 
         @Override
         public void insectsCreated(GameActionEvent event) {
-            for (Insect insect : event.getCreatedInsects()){
+            for (Insect insect : event.getCreatedInsects()) {
                 widgetFactory.create(insect);
 
                 insect.addAnimalControllerActionListener(new AnimalController());
                 System.out.println("Insect created at " + insect.getWebNode().getPosition().getX() + insect.getWebNode().getPosition().getY());
             }
+        }
+
+        @Override
+        public void playerChanged(GameActionEvent event) {
+            widgetFactory.getPlayerSpiderWidget(web.getPlayerSpider()).updatePlayerSpiderImage();
+            gameStepHappened(event);
         }
     }
 }

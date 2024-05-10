@@ -14,10 +14,15 @@ public class PlayerSpiderWidget extends AnimalWidget {
     private Spider playerSpider;
 
     public PlayerSpiderWidget(Spider playerSpider) {
-        super("images/spider.png", CELL_SIZE / 2, CELL_SIZE - 24);
+        super(playerSpider.isPlayer() ? "images/playerSpider.png" : "images/spider.png", CELL_SIZE / 2, CELL_SIZE - 24);
         this.playerSpider = playerSpider;
         setFocusable(true);
         addKeyListener(new KeyController());
+    }
+
+    public void updatePlayerSpiderImage(){
+        super.setImage("images/playerSpider.png", CELL_SIZE / 2, CELL_SIZE - 24);
+        updateState();
     }
 
     @Override
@@ -52,8 +57,12 @@ public class PlayerSpiderWidget extends AnimalWidget {
             Direction direction = directionByKeyCode(keyCode);
             if (direction != null) {
                 Web web = playerSpider.getWebNode().getWeb();
+                Spider temp = playerSpider;
                 playerSpider.makeMove(direction);
                 playerSpider = web.getPlayerSpider();
+                if (playerSpider != temp){
+                    playerSpider.makeMove(direction);
+                }
                 requestFocus();
             }
         }

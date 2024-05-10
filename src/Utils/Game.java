@@ -55,11 +55,12 @@ public class Game {
     public Bot getBot() {
         return this.bot;
     }
-    // TODO: это точно не public
+
     private void changePlayerSpider() {
         int index = new Random().nextInt(bot.getBotSpiderList().size());
         web.setPlayerSpider(bot.getBotSpiderList().get(index));
         bot.deleteSpiderFromList(index);
+        firePlayerSpiderChanged();
     }
 
     private void disappearInsects() {
@@ -168,6 +169,13 @@ public class Game {
         }
     }
 
+    protected void firePlayerSpiderChanged(){
+        for(GameActionListener listener : gameListeners){
+            GameActionEvent event = new GameActionEvent(listener);
+            event.setGame(this);
+            listener.playerChanged(event);
+        }
+    }
 }
 
 
