@@ -1,11 +1,8 @@
 package Entities;
 
-import Events.BotSpiderActionEvent;
-import Events.BotSpiderActionListener;
+import Events.*;
 import Events.Controllers.SpiderControllerActionEvent;
 import Events.Controllers.SpiderControllerActionListener;
-import Events.PlayerActionEvent;
-import Events.PlayerActionListener;
 import Setting.WebNode;
 import Utils.Direction;
 import Utils.Game;
@@ -59,16 +56,15 @@ public class Spider extends Animal {
             }
         }
 
-//        if (isAlive()) {
             if (this.game.getBot().isBotOwnsSpider(this)) {
                 fireSpiderMovedController(oldWebNode, newWebNode);
                 fireBotSpiderMoved();
+                fireStepHappened();
             } else {
                 fireSpiderMovedController(oldWebNode, newWebNode);
                 firePlayerMoved();
             }
-//        }
-    }
+        }
 
 
     private void moveToNextNode(WebNode nextWebNode) {
@@ -113,12 +109,13 @@ public class Spider extends Animal {
 
     // TODO: в потоковую функцию
     protected void firePlayerMoved() {
-        playerSpiderListenerList.stream().forEach(listener -> {
+        for (PlayerActionListener listener : playerSpiderListenerList) {
             PlayerActionEvent event = new PlayerActionEvent(listener);
             event.setPlayerSpider(this);
-            listener.playerMoved(event);
-
-        });
+            Runnable r = () -> listener.playerMoved(event);
+            Thread newThread = new Thread(r, "Listener");
+            newThread.start();
+        }
     }
 
     protected void firePlayerDied() {
@@ -150,6 +147,18 @@ public class Spider extends Animal {
             BotSpiderActionEvent event = new BotSpiderActionEvent(listener);
             event.setBotSpider(this);
             listener.botDied(event);
+        }
+    }
+
+    private ArrayList<GameActionListener> gameListeners = new ArrayList<>();
+
+    public void addGameListener(GameActionListener listener){
+        gameListeners.add(listener);
+    }
+
+    protected void fireStepHappened(){
+        for (GameActionListener listener : gameListeners){
+            listener.gameStepHappened(new GameActionEvent(listener));
         }
     }
 

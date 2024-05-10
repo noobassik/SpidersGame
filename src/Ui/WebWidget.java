@@ -51,12 +51,10 @@ public class WebWidget extends JPanel {
     }
 
     private void subscribeOnEntities() {
-//        web.getPlayerSpider().addAnimalControllerActionListener(new AnimalController());
-//        web.getPlayerSpider().addSpiderControllerActionListener(new SpiderController());
-
         for (Spider bot : web.getSpiderList()) {
             bot.addAnimalControllerActionListener(new AnimalController());
             bot.addSpiderControllerActionListener(new SpiderController());
+            bot.addGameListener(new GameStepObserver());
         }
 
         for (Insect insect : web.getInsectList()) {
@@ -116,7 +114,6 @@ public class WebWidget extends JPanel {
                 widgetFactory.create(insect);
 
                 insect.addAnimalControllerActionListener(new AnimalController());
-                System.out.println("Insect created at " + insect.getWebNode().getPosition().getX() + insect.getWebNode().getPosition().getY());
             }
         }
 

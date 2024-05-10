@@ -1,6 +1,5 @@
 package Entities;
 
-import Setting.Web;
 import Setting.WebNode;
 
 public class Fly extends Insect {

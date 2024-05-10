@@ -61,7 +61,7 @@ public class WidgetFactory {
         AnimalWidget animalWidget = createWidget(animal);
         WebNodeWidget webNodeWidgetWidget = webNodes.get(animal.getWebNode());
 
-        if (animalWidget != null){
+        if (animalWidget != null && webNodeWidgetWidget != null){
             webNodeWidgetWidget.addItem(animalWidget);
             animals.put(animal, animalWidget);
         }

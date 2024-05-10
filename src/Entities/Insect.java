@@ -2,7 +2,6 @@ package Entities;
 
 import Events.InsectActionEvent;
 import Events.InsectActionListener;
-import Setting.Web;
 import Setting.WebNode;
 
 import java.util.ArrayList;

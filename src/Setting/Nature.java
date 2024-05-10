@@ -26,7 +26,7 @@ public class Nature {
 
     public void generateAnimals() {
         createInsects();
-        Spider playerSpider = new Spider(web.getEmptyWebNodes().get(0), 5);
+        Spider playerSpider = new Spider(web.getEmptyWebNodes().get(0), 5   );
         web.addSpider(playerSpider);
         web.addSpider(new Spider(web.getEmptyWebNodes().get(1), 6));
         web.addSpider(new Spider(web.getEmptyWebNodes().get(2), 9));

@@ -28,17 +28,17 @@ public class Game {
 
     public void startGame() {
         this.nature.generateAnimals();
-        for (Spider spider : this.web.getSpiderList()){
+        for (Spider spider : this.web.getSpiderList()) {
             spider.setGame(this);
         }
         web.getPlayerSpider().addPlayerSpiderActionListener(new PlayerSpiderObserver());
         web.getPlayerSpider().addBotSpiderActionListener(new BotSpiderObserver());
-        for (Spider botSpider : bot.getBotSpiderList()){
+        for (Spider botSpider : bot.getBotSpiderList()) {
             botSpider.addPlayerSpiderActionListener(new PlayerSpiderObserver());
             botSpider.addBotSpiderActionListener(new BotSpiderObserver());
         }
 
-        for (Insect insect : this.web.getInsectList()){
+        for (Insect insect : this.web.getInsectList()) {
             insect.addInsectActionListener(new InsectObserver());
         }
     }
@@ -48,7 +48,7 @@ public class Game {
         fireGameEnded();
     }
 
-    public Web getWeb(){
+    public Web getWeb() {
         return this.web;
     }
 
@@ -63,22 +63,32 @@ public class Game {
         firePlayerSpiderChanged();
     }
 
-    private void disappearInsects() {
-        for (Insect insect : web.getInsectList()) {
-            insect.disappearFromWeb();
+    private synchronized void disappearInsects() {
+        try {
+            for (Insect insect : web.getInsectList()) {
+                insect.disappearFromWeb();
+                Thread.sleep(100);
+            }
+            for (Insect insect : insectsToRemove){
+                web.removeInsect(insect);
+            }
+            insectsToRemove.clear();
+        } catch (InterruptedException e ) {
+            throw new RuntimeException(e);
         }
-        for (Insect insect : insectsToRemove){
-            web.removeInsect(insect);
-        }
-        insectsToRemove.clear();
     }
 
-    private void generateInsects(){
-        ArrayList<Insect> createdInsects = nature.createInsects();
-        for (Insect insect : createdInsects){
-            insect.addInsectActionListener(new InsectObserver());
+    private synchronized void generateInsects() {
+        try {
+            ArrayList<Insect> createdInsects = nature.createInsects();
+            for (Insect insect : createdInsects) {
+                insect.addInsectActionListener(new InsectObserver());
+                Thread.sleep(100);
+            }
+            fireInsectsAppeared(createdInsects);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
-        fireInsectsAppeared(createdInsects);
     }
 
     private ArrayList<Spider> spidersToRemove = new ArrayList<>();
@@ -88,7 +98,7 @@ public class Game {
     private class PlayerSpiderObserver implements PlayerActionListener {
         @Override
         public void playerDied(PlayerActionEvent event) {
-            if (web.getSpiderList().size() == 0){
+            if (web.getSpiderList().size() == 0) {
                 endGame();
             } else {
                 spidersToRemove.add(event.getPlayerSpider());
@@ -98,8 +108,8 @@ public class Game {
 
         @Override
         public void playerMoved(PlayerActionEvent event) {
-            bot.moveAllBots(); // Если сходил паук-игрок, после него должны сходить пауки-боты
-            disappearInsects(); // Пропадают насекомые
+            bot.moveAllBots();
+            disappearInsects();
             generateInsects();
             fireGameStepHappened();
         }
@@ -136,32 +146,32 @@ public class Game {
 
     private ArrayList<GameActionListener> gameListeners = new ArrayList<>();
 
-    public void addGameActionListener(GameActionListener listener){
+    public void addGameActionListener(GameActionListener listener) {
         this.gameListeners.add(listener);
     }
 
-    public void removeGameActionListener(GameActionListener listener){
+    public void removeGameActionListener(GameActionListener listener) {
         this.gameListeners.remove(listener);
     }
 
-    protected void fireGameEnded(){
-        for(GameActionListener listener : this.gameListeners){
+    protected void fireGameEnded() {
+        for (GameActionListener listener : this.gameListeners) {
             GameActionEvent event = new GameActionEvent(listener);
             event.setGame(this);
             listener.gameEnded(event);
         }
     }
 
-    protected void fireGameStepHappened(){
-        for(GameActionListener listener : gameListeners){
+    protected void fireGameStepHappened() {
+        for (GameActionListener listener : gameListeners) {
             GameActionEvent event = new GameActionEvent(listener);
             event.setGame(this);
             listener.gameStepHappened(event);
         }
     }
 
-    protected void fireInsectsAppeared(ArrayList<Insect> createdInsects){
-        for (GameActionListener listener : gameListeners){
+    protected void fireInsectsAppeared(ArrayList<Insect> createdInsects) {
+        for (GameActionListener listener : gameListeners) {
             GameActionEvent event = new GameActionEvent(listener);
             event.setCreatedInsects(createdInsects);
             event.setGame(this);
@@ -169,8 +179,8 @@ public class Game {
         }
     }
 
-    protected void firePlayerSpiderChanged(){
-        for(GameActionListener listener : gameListeners){
+    protected void firePlayerSpiderChanged() {
+        for (GameActionListener listener : gameListeners) {
             GameActionEvent event = new GameActionEvent(listener);
             event.setGame(this);
             listener.playerChanged(event);
