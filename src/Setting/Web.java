@@ -12,7 +12,6 @@ import java.util.ListIterator;
 
 
 public class Web {
-    private Animal animal;
     private LinkedList<WebNode> webNodes = new LinkedList<WebNode>();
     private final int size;
     private Spider playerSpider;
@@ -61,10 +60,6 @@ public class Web {
 
             }
         }
-    }
-
-    public LinkedList<WebNode> getWebNodes() {
-        return new LinkedList<>(this.webNodes);
     }
 
     public int getSize() {
