@@ -57,4 +57,8 @@ public class Bot {
     public void deleteSpiderFromList(int index) {
         this.botSpiderList.remove(index);
     }
+
+    public void deleteSpiderFromList(Spider spider) {
+        this.botSpiderList.remove(spider);
+    }
 }

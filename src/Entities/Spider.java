@@ -82,6 +82,7 @@ public class Spider extends Animal {
         fireSpiderDiedController(this.webNode);
         super.web.removeSpider(this);
         super.webNode.setAnimal(null);
+        game.getBot().deleteSpiderFromList(this);
         this.setWebNode(null);
         if (this == web.getPlayerSpider()) {
             super.web.setPlayerSpider(null);
