@@ -41,7 +41,7 @@ public class Bot {
                 Direction direction = spiderMoveStrategy.findNearestInsect(spider.getWebNode());
                 if (direction != null) {
                     spider.makeMove(direction);
-                    Thread.sleep(100);
+                    Thread.sleep(50);
                 }
             }
         } catch (InterruptedException e) {

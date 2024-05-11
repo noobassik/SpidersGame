@@ -13,6 +13,12 @@ public class Main {
     }
 
     static class GamePanel extends JFrame {
+
+        private final JLabel stepsMadeLabel;
+        private final JLabel insectsEatenLabel;
+
+        private int stepsMade = 0;
+        private int insectsEaten = 0;
         private Game game;
         public WidgetFactory widgetFactory;
 
@@ -25,6 +31,16 @@ public class Main {
             game.addGameActionListener(new GameController());
 
             JPanel content = (JPanel) this.getContentPane();
+            // Добавляем JLabel'ы для сводки
+            stepsMadeLabel = new JLabel("Шагов сделано: " + 0);
+            insectsEatenLabel = new JLabel("Насекомых съедено: " + 0);
+
+            JPanel summaryPanel = new JPanel();
+            summaryPanel.add(stepsMadeLabel);
+            summaryPanel.add(new JLabel("         "));
+            summaryPanel.add(insectsEatenLabel);
+            content.add(summaryPanel, BorderLayout.NORTH);
+
             content.add(new WebWidget(game.getWeb(), widgetFactory, game));
 
             widgetFactory.getPlayerSpiderWidget(game.getWeb().getPlayerSpider()).requestFocus();
@@ -45,7 +61,9 @@ public class Main {
 
             @Override
             public void gameStepHappened(GameActionEvent event) {
-
+                stepsMade++;
+                stepsMadeLabel.setText("Шагов сделано: " + stepsMade);
+                insectsEatenLabel.setText("Насекомых съедено: " + insectsEaten);
             }
 
             @Override
@@ -56,6 +74,11 @@ public class Main {
             @Override
             public void playerChanged(GameActionEvent event) {
 
+            }
+
+            @Override
+            public void playerAteInsect(GameActionEvent event) {
+                insectsEaten++;
             }
 
         }

@@ -53,6 +53,9 @@ public class Spider extends Animal {
                 nextWebNode.getAnimal().die();
                 moveToNextNode(nextWebNode);
                 newWebNode = nextWebNode;
+                if (this == web.getPlayerSpider()){
+                    firePlayerAteInsect();
+                }
             }
         }
 
@@ -107,7 +110,6 @@ public class Spider extends Animal {
         playerSpiderListenerList.remove(listener);
     }
 
-    // TODO: в потоковую функцию
     protected void firePlayerMoved() {
         for (PlayerActionListener listener : playerSpiderListenerList) {
             PlayerActionEvent event = new PlayerActionEvent(listener);
@@ -115,6 +117,14 @@ public class Spider extends Animal {
             Runnable r = () -> listener.playerMoved(event);
             Thread newThread = new Thread(r, "Listener");
             newThread.start();
+        }
+    }
+
+    protected void firePlayerAteInsect(){
+        for(PlayerActionListener listener : playerSpiderListenerList){
+            PlayerActionEvent event = new PlayerActionEvent(listener);
+            event.setPlayerSpider(this);
+            listener.playerAteInsect(event);
         }
     }
 

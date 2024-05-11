@@ -67,7 +67,7 @@ public class Game {
         try {
             for (Insect insect : web.getInsectList()) {
                 insect.disappearFromWeb();
-                Thread.sleep(100);
+                Thread.sleep(50);
             }
             for (Insect insect : insectsToRemove){
                 web.removeInsect(insect);
@@ -83,7 +83,7 @@ public class Game {
             ArrayList<Insect> createdInsects = nature.createInsects();
             for (Insect insect : createdInsects) {
                 insect.addInsectActionListener(new InsectObserver());
-                Thread.sleep(100);
+                Thread.sleep(50);
             }
             fireInsectsAppeared(createdInsects);
         } catch (InterruptedException e) {
@@ -112,6 +112,11 @@ public class Game {
             disappearInsects();
             generateInsects();
             fireGameStepHappened();
+        }
+
+        @Override
+        public void playerAteInsect(PlayerActionEvent event) {
+            firePlayerAteInsect();
         }
     }
 
@@ -184,6 +189,13 @@ public class Game {
             GameActionEvent event = new GameActionEvent(listener);
             event.setGame(this);
             listener.playerChanged(event);
+        }
+    }
+    protected void firePlayerAteInsect() {
+        for (GameActionListener listener : gameListeners) {
+            GameActionEvent event = new GameActionEvent(listener);
+            event.setGame(this);
+            listener.playerAteInsect(event);
         }
     }
 }

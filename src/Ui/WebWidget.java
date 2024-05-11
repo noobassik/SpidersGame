@@ -122,6 +122,11 @@ public class WebWidget extends JPanel {
             widgetFactory.getPlayerSpiderWidget(web.getPlayerSpider()).updatePlayerSpiderImage();
             gameStepHappened(event);
         }
+
+        @Override
+        public void playerAteInsect(GameActionEvent event) {
+
+        }
     }
 }
 
