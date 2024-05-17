@@ -12,7 +12,7 @@ import java.util.ListIterator;
 
 
 public class Web {
-    private LinkedList<WebNode> webNodes = new LinkedList<WebNode>();
+    private LinkedList<WebNode> webNodes = new LinkedList<>();
     private final int size;
     private Spider playerSpider;
     private ArrayList<Spider> spiderList;
@@ -93,15 +93,15 @@ public class Web {
         }
     }
 
-    public void removeInsects(ArrayList<Insect> inscets) {
+    public void removeInsects(ArrayList<Insect> insects) {
         if (!this.insectList.isEmpty()) {
-            for (var insect : inscets) {
+            for (var insect : insects) {
                 if (!this.insectList.contains(insect)) {
                     return;
                 }
                 insect.disappearFromWeb();
             }
-            this.insectList.removeAll(inscets);
+            this.insectList.removeAll(insects);
         }
     }
 
@@ -140,9 +140,7 @@ public class Web {
     private void setAnimalToWebNode(Animal animal, Point position) {
         for (WebNode webNode : webNodes) {
             if (webNode.getPosition().equals(position)) {
-                if (webNode != null) {
-                    webNode.setAnimal(animal);
-                }
+                webNode.setAnimal(animal);
                 break;
             }
         }

@@ -44,7 +44,7 @@ public class WebNode {
         return this.position;
     }
 
-   public Web getWeb(){
+    public Web getWeb(){
         return this.web;
    }
 

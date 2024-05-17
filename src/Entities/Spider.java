@@ -67,7 +67,7 @@ public class Spider extends Animal {
                 fireSpiderMovedController(oldWebNode, newWebNode);
                 firePlayerMoved();
             }
-        }
+    }
 
 
     private void moveToNextNode(WebNode nextWebNode) {

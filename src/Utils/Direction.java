@@ -41,18 +41,13 @@ public class Direction {
     public Direction getRandomDirection() {
         Random random = new Random();
         int randomIndex = random.nextInt(4); // 4 possible directions
-        switch (randomIndex) {
-            case 0:
-                return north();
-            case 1:
-                return south();
-            case 2:
-                return east();
-            case 3:
-                return west();
-            default:
-                throw new IllegalStateException("Unexpected value: " + randomIndex);
-        }
+        return switch (randomIndex) {
+            case 0 -> north();
+            case 1 -> south();
+            case 2 -> east();
+            case 3 -> west();
+            default -> throw new IllegalStateException("Unexpected value: " + randomIndex);
+        };
     }
 
 
@@ -88,9 +83,8 @@ public class Direction {
     @Override
     public boolean equals(Object other) {
 
-        if (other instanceof Direction) {
+        if (other instanceof Direction otherDirect) {
             // Типы совместимы, можно провести преобразование
-            Direction otherDirect = (Direction) other;
             // Возвращаем результат сравнения углов
             return _angle == otherDirect._angle;
         }
