@@ -8,7 +8,7 @@ public class Fly extends Insect {
 
     public Fly(WebNode webNode) {
         super(webNode);
-        super.setValue(super.getValue() + 2);
+        super.setValue(super.getValue() + 3);
     }
 
     @Override

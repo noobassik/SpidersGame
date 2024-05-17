@@ -8,7 +8,7 @@ public class Mosquito extends Insect {
 
     public Mosquito(WebNode webNode) {
         super(webNode);
-        super.setValue(super.getValue() + 1);
+        super.setValue(super.getValue() + 2);
     }
 
     @Override

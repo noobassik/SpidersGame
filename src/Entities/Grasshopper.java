@@ -8,7 +8,7 @@ public class Grasshopper extends Insect {
 
     public Grasshopper(WebNode webNode) {
         super(webNode);
-        super.setValue(super.getValue() + 3);
+        super.setValue(super.getValue() + 4);
     }
 
     @Override

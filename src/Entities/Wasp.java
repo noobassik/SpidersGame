@@ -8,7 +8,7 @@ public class Wasp extends Insect {
 
     public Wasp(WebNode webNode) {
         super(webNode);
-        super.setValue(super.getValue() + 3);
+        super.setValue(super.getValue() + 5);
     }
     @Override
     public void disappearFromWeb() {
