@@ -37,7 +37,7 @@ public class Bot {
     // TODO: если не будет насекомых, то direction == null
     public synchronized void moveAllBots() {
         try {
-            for (Spider spider : this.botSpiderList) {
+            for (Spider spider : new ArrayList<>(this.botSpiderList)) {
                 Direction direction = spiderMoveStrategy.findNearestInsect(spider.getWebNode());
                 if (direction != null) {
                     spider.makeMove(direction);
@@ -47,7 +47,6 @@ public class Bot {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public boolean isBotOwnsSpider(Spider spider) {
