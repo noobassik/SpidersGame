@@ -1,8 +1,12 @@
 import Events.GameActionEvent;
 import Events.GameActionListener;
+import Setting.Bot;
+import Setting.Nature;
+import Setting.Web;
 import Ui.WebWidget;
 import Ui.WidgetFactory;
 import Utils.Game;
+import Utils.SpiderMoveStrategy;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,8 +30,12 @@ public class Main {
             setVisible(true);
 
             widgetFactory = new WidgetFactory();
-            game = new Game();
-
+            Web web = new Web(6);
+            SpiderMoveStrategy spiderMoveStrategy = new SpiderMoveStrategy(web);
+            Bot bot = new Bot(spiderMoveStrategy, web);
+            Nature nature = new Nature(web, bot);
+            game = new Game(web,nature, bot);
+            game.startGame();
             game.addGameActionListener(new GameController());
 
             JPanel content = (JPanel) this.getContentPane();

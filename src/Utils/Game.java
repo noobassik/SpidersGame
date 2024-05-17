@@ -15,15 +15,10 @@ public class Game {
     private Web web;
     private Bot bot;
 
-    public Game() {
-        Web web = new Web(6);
-        SpiderMoveStrategy spiderMoveStrategy = new SpiderMoveStrategy(web);
-        Bot bot = new Bot(spiderMoveStrategy, web);
-        Nature nature = new Nature(web, bot);
+    public Game(Web web, Nature nature, Bot bot) {
         this.web = web;
         this.nature = nature;
         this.bot = bot;
-        startGame();
     }
 
     public void startGame() {
