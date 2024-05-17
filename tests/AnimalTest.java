@@ -4,6 +4,9 @@ import Entities.Spider;
 import Setting.Bot;
 import Setting.Nature;
 import Setting.Web;
+import Setting.WebNode;
+import Utils.Direction;
+import Utils.Game;
 import Utils.SpiderMoveStrategy;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,13 +20,14 @@ public class AnimalTest {
         SpiderMoveStrategy spiderMoveStrategy = new SpiderMoveStrategy(web);
         Bot bot = new Bot(spiderMoveStrategy, web);
         Nature nature = new Nature(web, bot);
-        Spider playerSpider = new Spider(web.getWebNode(new Point(0, 0)), 100);
+        Game game = new Game(web, nature, bot);
+        Spider playerSpider = new Spider(web.getWebNode(new Point(0, 0)), 1);
         Spider botSpider = new Spider(web.getWebNode(new Point(0, 1)), 100);
-//        nature.generateAnimals();
         web.addSpider(playerSpider);
         web.setPlayerSpider(playerSpider);
         web.addSpider(botSpider);
-      //  playerSpider.die();
+        playerSpider.setGame(game);
+        playerSpider.makeMove(Direction.north());
         Assert.assertEquals(web.getWebNode(new Point(0, 0)).getAnimal(), null);
         Assert.assertEquals(web.getSpiderList().contains(playerSpider), false);
     }
@@ -34,13 +38,15 @@ public class AnimalTest {
         SpiderMoveStrategy spiderMoveStrategy = new SpiderMoveStrategy(web);
         Bot bot = new Bot(spiderMoveStrategy, web);
         Nature nature = new Nature(web, bot);
+        Game game = new Game(web, nature, bot);
         Spider playerSpider = new Spider(web.getWebNode(new Point(0, 0)), 100);
-        Spider botSpider = new Spider(web.getWebNode(new Point(0, 1)), 100);
+        Spider botSpider = new Spider(web.getWebNode(new Point(0, 1)), 1);
         web.addSpider(playerSpider);
         web.setPlayerSpider(playerSpider);
         web.addSpider(botSpider);
         web.setPlayerSpider(playerSpider);
-       // botSpider.die();
+        botSpider.setGame(game);
+        botSpider.makeMove(Direction.west());
         Assert.assertEquals(web.getWebNode(new Point(0, 1)).getAnimal(), null);
         Assert.assertEquals(web.getSpiderList().contains(botSpider), false);
     }
@@ -51,11 +57,14 @@ public class AnimalTest {
         SpiderMoveStrategy spiderMoveStrategy = new SpiderMoveStrategy(web);
         Bot bot = new Bot(spiderMoveStrategy, web);
         Nature nature = new Nature(web, bot);
+        Game game = new Game(web, nature, bot);
         Insect insect = new Fly(web.getWebNode(new Point(0, 0)));
-        // nature.createAnimal(insect);
         web.addInsect(insect);
-       // insect.die();
-        Assert.assertEquals(web.getWebNode(new Point(0, 0)).getAnimal(), null);
+        Spider playerSpider = new Spider(web.getWebNode(new Point(1, 0)), 10);
+        web.addSpider(playerSpider);
+        playerSpider.setGame(game);
+        playerSpider.makeMove(Direction.north());
+        Assert.assertEquals(web.getWebNode(new Point(0, 0)).getAnimal(), playerSpider);
         Assert.assertEquals(web.getInsectList().contains(insect), false);
     }
 }
