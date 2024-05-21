@@ -3,8 +3,9 @@ package Entities;
 import Setting.WebNode;
 
 public class Mosquito extends Insect {
-    public static final double probabilityToDisappear = 0.1;
-    public static final double probabilityToAppear = 0.5;
+    public static final int size = Animal.size.SMALL.ordinal();
+    public static final double probabilityToDisappear = 0.1 * (size + 1);
+    public static final double probabilityToAppear = 0.5 / (size + 1);
 
     public Mosquito(WebNode webNode) {
         super(webNode);

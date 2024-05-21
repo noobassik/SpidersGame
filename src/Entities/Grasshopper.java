@@ -3,8 +3,9 @@ package Entities;
 import Setting.WebNode;
 
 public class Grasshopper extends Insect {
-    public static final double probabilityToDisappear = 0.35;
-    public static final double probabilityToAppear = 0.5;
+    public static final int size = Animal.size.MIDDLE.ordinal();
+    public static final double probabilityToDisappear = 0.35 * (size + 1);
+    public static final double probabilityToAppear = 0.5 / (size + 1);
 
     public Grasshopper(WebNode webNode) {
         super(webNode);
