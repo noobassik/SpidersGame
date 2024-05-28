@@ -10,11 +10,11 @@ public class GameWidgetUtils {
     public static Color healthTextColor(int health){
         Color textColor;
 
-        if (health > 25){
+        if (health >= 25){
             textColor = Color.black;
         }
         else if (health >= 10){
-            textColor = Color.ORANGE;
+            textColor = Color.green;
         }
         else {
             textColor = Color.RED;
