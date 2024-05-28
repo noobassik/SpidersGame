@@ -28,8 +28,7 @@ public class SpiderMoveStrategy {
                 nearestPoint = point;
             }
         }
-        Direction direction = getDirection(startWebNode.getPosition(), nearestPoint);
-        return direction;
+        return getDirection(startWebNode.getPosition(), nearestPoint);
     }
 
     private Direction getDirection(Point start, Point nearestPoint) {
