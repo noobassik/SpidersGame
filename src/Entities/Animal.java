@@ -11,13 +11,6 @@ public abstract class Animal {
     protected Web web;
     protected WebNode webNode;
 
-    protected enum size {
-        SMALL,
-        MIDDLE,
-        BIG;
-    }
-
-
     public Animal(WebNode webNode) {
         if (webNode != null) {
             if (webNode.getWeb().getWebNode(webNode.getPosition()).isEmpty()) {

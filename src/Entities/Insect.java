@@ -9,6 +9,12 @@ import java.util.ArrayList;
 public abstract class Insect extends Animal {
     protected int value;
 
+    protected enum size {
+        SMALL,
+        MIDDLE,
+        BIG;
+    }
+
     public Insect(WebNode webNode) {
         super(webNode);
     }
@@ -21,7 +27,14 @@ public abstract class Insect extends Animal {
         this.value = value;
     }
 
-    public abstract void disappearFromWeb();
+    protected abstract double getProbabilityToDisappear();
+
+    public void disappearFromWeb(){
+        double probability = Math.round(Math.random() * 10)/10.0;
+        if (probability <= getProbabilityToDisappear()){
+            die();
+        }
+    }
     private ArrayList<InsectActionListener> insectListenersList = new ArrayList<>();
 
     public void addInsectActionListener(InsectActionListener listener) {
