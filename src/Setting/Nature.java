@@ -26,21 +26,13 @@ public class Nature {
 
     public void generateAnimals() {
         createInsects();
-        Spider playerSpider = new Spider(web.getEmptyWebNodes().get(0), 5   );
+        Spider playerSpider = new Spider(web.getEmptyWebNodes().get(0), 50);
         web.addSpider(playerSpider);
-        web.addSpider(new Spider(web.getEmptyWebNodes().get(1), 6));
-        web.addSpider(new Spider(web.getEmptyWebNodes().get(2), 9));
-        web.addSpider(new Spider(web.getEmptyWebNodes().get(3), 2));
+        web.addSpider(new Spider(web.getEmptyWebNodes().get(1), 15));
+        web.addSpider(new Spider(web.getEmptyWebNodes().get(2), 10));
+        web.addSpider(new Spider(web.getEmptyWebNodes().get(3), 5));
         web.setPlayerSpider(playerSpider);
         bot.addSpiders(web.getSpiderList());
-    }
-
-    private void placeAnimalInWeb(WebNode webNode, Animal animal) {
-        webNode.setAnimal(animal);
-    }
-
-    private WebNode getRandomWebNode(ArrayList<WebNode> webNodeList) {
-        return webNodeList.get((int) (Math.random() * (webNodeList.size() - 1)));
     }
 
     public ArrayList<Insect> createInsects() {
@@ -60,15 +52,12 @@ public class Nature {
         }
         return createdInsects;
     }
-//    private final Map insects = { 'waps': new Wasp }
-//    public static final int maxAmountOfInsects = 5;
-//    public void generateInsects(ArrayList<AbstractInsectFactory> factories) {
-//        for (int i = 0; i < maxAmountOfBots; i++) {
-//            addInsect(factories.random().create());
-//        }
-//    }
 
-//    new Wasp(3);
-//    Wasp.create();
-//    new WaspFactory().create();
+    private void placeAnimalInWeb(WebNode webNode, Animal animal) {
+        webNode.setAnimal(animal);
+    }
+
+    private WebNode getRandomWebNode(ArrayList<WebNode> webNodeList) {
+        return webNodeList.get((int) (Math.random() * (webNodeList.size() - 1)));
+    }
 }
