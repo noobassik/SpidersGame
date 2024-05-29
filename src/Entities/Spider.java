@@ -49,6 +49,9 @@ public class Spider extends Animal {
                 moveToNextNode(nextWebNode);
                 newWebNode = nextWebNode;
             } else if (nextWebNode.getAnimal() instanceof Insect) {
+                if (nextWebNode.getAnimal() instanceof Wasp) {
+                    ((Wasp) nextWebNode.getAnimal()).sting(this);
+                }
                 setHealth(this.health + ((Insect) nextWebNode.getAnimal()).getValue());
                 nextWebNode.getAnimal().die();
                 moveToNextNode(nextWebNode);
@@ -92,6 +95,13 @@ public class Spider extends Animal {
         }
         super.web = null;
         this.game = null;
+    }
+
+    public void getBitten(int health) {
+        setHealth(this.health - health);
+        if (!isAlive()){
+            die();
+        }
     }
 
     @Override

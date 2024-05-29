@@ -27,7 +27,7 @@ public class Grasshopper extends Insect {
     @Override
     public void disappearFromWeb() {
         double probability = Math.round(Math.random() * 10)/10.0;
-        if (probability <= probabilityToDisappear - (double)this.attempts / 10){ // TODO: не сьедается кузнечик
+        if (probability <= probabilityToDisappear - (double)this.attempts / 10){
             die();
         } else {
             attempts++;

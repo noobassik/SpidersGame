@@ -34,7 +34,7 @@ public class Bot {
         }
     }
 
-    // TODO: если не будет насекомых, то direction == null
+
     public synchronized void moveAllBots() {
         try {
             for (Spider spider : new ArrayList<>(this.botSpiderList)) {
