@@ -1,12 +1,10 @@
 package Ui;
 
 import Entities.Animal;
+import Entities.Grasshopper;
 import Entities.Insect;
 import Entities.Spider;
-import Events.Controllers.AnimalControllerActionEvent;
-import Events.Controllers.AnimalControllerActionListener;
-import Events.Controllers.SpiderControllerActionEvent;
-import Events.Controllers.SpiderControllerActionListener;
+import Events.Controllers.*;
 import Events.GameActionEvent;
 import Events.GameActionListener;
 import Setting.Web;
@@ -59,6 +57,9 @@ public class WebWidget extends JPanel {
 
         for (Insect insect : web.getInsectList()) {
             insect.addAnimalControllerActionListener(new AnimalController());
+            if (insect instanceof Grasshopper grasshopper) {
+                grasshopper.addGrasshopperActionListener(new GrasshopperController());
+            }
         }
 
         game.addGameActionListener(new GameStepObserver());
@@ -73,6 +74,18 @@ public class WebWidget extends JPanel {
 
             webNodeWidget.removeItem(animalWidget);
             widgetFactory.remove(animal);
+        }
+    }
+
+    private class GrasshopperController implements GrasshopperControllerActionListener {
+        @Override
+        public void jumpedTo(GrasshopperControllerActionEvent event) {
+            AnimalWidget spiderWidget = widgetFactory.getWidget(event.getGrasshopper());
+            WebNodeWidget webCrossWidgetFrom = widgetFactory.getWidget(event.getFrom());
+            WebNodeWidget webCrossWidgetTo = widgetFactory.getWidget(event.getTo());
+
+            webCrossWidgetFrom.removeItem(spiderWidget);
+            webCrossWidgetTo.addItem(spiderWidget);
         }
     }
 
@@ -114,6 +127,10 @@ public class WebWidget extends JPanel {
                 widgetFactory.create(insect);
 
                 insect.addAnimalControllerActionListener(new AnimalController());
+
+                if (insect instanceof Grasshopper grasshopper) {
+                    grasshopper.addGrasshopperActionListener(new GrasshopperController());
+                }
             }
         }
 
