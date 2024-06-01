@@ -6,8 +6,9 @@ import Entities.Insect;
 public class GrasshopperFactory implements InsectFactory {
     @Override
     public Insect createInsect() {
-        if (Math.random() < Grasshopper.probabilityToAppear) {
-            return new Grasshopper(null);
+        Grasshopper grasshopper = new Grasshopper(null);
+        if (Math.random() < grasshopper.getProbabilityToAppear()) {
+            return grasshopper;
         }
         return null;
     }

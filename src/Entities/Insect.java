@@ -29,6 +29,12 @@ public abstract class Insect extends Animal {
 
     protected abstract double getProbabilityToDisappear();
 
+    protected abstract double getProbabilityToAppear();
+
+    protected abstract double calculateProbabilityToDisappear();
+
+    protected abstract double calculateProbabilityToAppear();
+
     public void disappearFromWeb(){
         double probability = Math.round(Math.random() * 10)/10.0;
         if (probability <= getProbabilityToDisappear()){

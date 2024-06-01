@@ -9,8 +9,8 @@ import java.util.Random;
 
 public class Grasshopper extends Insect {
     public static int size = Insect.size.MIDDLE.ordinal();
-    public static double probabilityToDisappear = 0.35 * (size + 1);
-    public static double probabilityToAppear = 0.5 / (size + 1);
+    public double probabilityToDisappear = calculateProbabilityToDisappear();
+    public double probabilityToAppear = calculateProbabilityToAppear();
 
     private int attempts = 0;
 
@@ -21,13 +21,28 @@ public class Grasshopper extends Insect {
 
     @Override
     protected double getProbabilityToDisappear() {
-        return probabilityToDisappear;
+        return this.probabilityToDisappear;
+    }
+
+    @Override
+    public double getProbabilityToAppear() {
+        return this.probabilityToAppear;
+    }
+
+    @Override
+    protected double calculateProbabilityToDisappear() {
+        return 0.35 * (size + 1) - (double)this.attempts / 10;
+    }
+
+    @Override
+    protected double calculateProbabilityToAppear() {
+        return 0.5 / (size + 1);
     }
 
     @Override
     public void disappearFromWeb() {
         double probability = Math.round(Math.random() * 10)/10.0;
-        if (probability <= probabilityToDisappear - (double)this.attempts / 10){
+        if (probability <= probabilityToDisappear){
             die();
         } else {
             attempts++;

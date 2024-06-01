@@ -6,8 +6,9 @@ import Entities.Mosquito;
 public class MosquitoFactory implements InsectFactory {
     @Override
     public Insect createInsect() {
-        if (Math.random() < Mosquito.probabilityToAppear) {
-            return new Mosquito(null);
+        Mosquito mosquito = new Mosquito(null);
+        if (Math.random() < mosquito.getProbabilityToAppear()) {
+            return mosquito;
         }
         return null;
     }

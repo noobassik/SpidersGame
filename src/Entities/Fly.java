@@ -4,8 +4,8 @@ import Setting.WebNode;
 
 public class Fly extends Insect {
     public static int size = Insect.size.SMALL.ordinal();
-    public static double probabilityToDisappear = 0.2 * (size + 1);
-    public static double probabilityToAppear = 0.5 / (size + 1);
+    public double probabilityToDisappear = calculateProbabilityToDisappear();
+    public double probabilityToAppear = calculateProbabilityToAppear();
 
     public Fly(WebNode webNode) {
         super(webNode);
@@ -14,6 +14,21 @@ public class Fly extends Insect {
 
     @Override
     protected double getProbabilityToDisappear() {
-        return probabilityToDisappear;
+        return this.probabilityToDisappear;
+    }
+
+    @Override
+    public double getProbabilityToAppear() {
+        return this.probabilityToAppear;
+    }
+
+    @Override
+    protected double calculateProbabilityToDisappear() {
+        return 0.2 * (size + 1);
+    }
+
+    @Override
+    protected double calculateProbabilityToAppear() {
+        return 0.5 / (size + 1);
     }
 }
