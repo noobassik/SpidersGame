@@ -9,11 +9,7 @@ import java.util.ArrayList;
 public abstract class Insect extends Animal {
     protected int value;
 
-    protected enum size {
-        SMALL,
-        MIDDLE,
-        BIG;
-    }
+    protected int size;
 
     public Insect(WebNode webNode) {
         super(webNode);
@@ -22,6 +18,11 @@ public abstract class Insect extends Animal {
     public int getValue() {
         return this.value;
     }
+
+    public int getSize() {
+        return this.size;
+    }
+
 
     protected void setValue(int value) {
         this.value = value;

@@ -4,7 +4,7 @@ import java.awt.*;
 
 import static Ui.WebNodeWidget.CELL_SIZE;
 
-public abstract class InsectWidget extends AnimalWidget{
+public class InsectWidget extends AnimalWidget{
 
     public InsectWidget(String imagePath, int imageWidth, int imageHeight) {
         super(imagePath, imageWidth, imageHeight);
@@ -12,7 +12,13 @@ public abstract class InsectWidget extends AnimalWidget{
 
     @Override
     protected Dimension getDimension() {
-        return new Dimension((int) (CELL_SIZE/2.6), (int) (CELL_SIZE/1.58));
+        return new Dimension(CELL_SIZE, CELL_SIZE);
     }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        int x = (getWidth() - getImage().getWidth()) / 2;
+        int y = (getHeight() - getImage().getHeight()) / 2;
+        g.drawImage(getImage(), x, y, null);
+    }
 }

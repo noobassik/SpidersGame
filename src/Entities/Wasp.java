@@ -3,14 +3,14 @@ package Entities;
 import Setting.WebNode;
 
 public class Wasp extends Insect {
-    public static int size = Insect.size.BIG.ordinal();
     public double probabilityToDisappear = calculateProbabilityToDisappear();
     public double probabilityToAppear = calculateProbabilityToAppear();
     public static double probabilityToBite = 0.5;
 
-    public Wasp(WebNode webNode) {
+    public Wasp(WebNode webNode, int size) {
         super(webNode);
         super.setValue(super.getValue() + 5);
+        super.size = size;
     }
 
     public void sting(Spider spider) {

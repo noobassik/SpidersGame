@@ -9,13 +9,12 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 public abstract class WebNodeItemWidget extends JPanel {
-    // TODO: сюда (?) надо переместить логику перемещения бота
     protected BufferedImage image;
 
     public WebNodeItemWidget(String imagePath, int imageWidth, int imageHeight) {
-        updateState();
         setOpaque(false);
         setImage(imagePath, imageWidth, imageHeight);
+        updateState();
     }
 
     protected BufferedImage getImage() {
@@ -40,14 +39,4 @@ public abstract class WebNodeItemWidget extends JPanel {
     }
 
     protected abstract Dimension getDimension();
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        System.out.println(LocalDateTime.now() + "Trying to repaint super" + super.getClass().getName());
-        super.paintComponent(g);
-        System.out.println(LocalDateTime.now() + "Trying to repaint" + this.getClass().getName());
-        g.drawImage(getImage(), 0, 0, null);
-        System.out.println(LocalDateTime.now() + " Repainted" + this.getClass().getName());
-        System.out.println("\n");
-    }
 }

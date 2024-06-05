@@ -3,13 +3,13 @@ package Entities;
 import Setting.WebNode;
 
 public class Mosquito extends Insect {
-    public static int size = Insect.size.SMALL.ordinal();
     public double probabilityToDisappear = calculateProbabilityToDisappear();
     public double probabilityToAppear = calculateProbabilityToAppear();
 
-    public Mosquito(WebNode webNode) {
+    public Mosquito(WebNode webNode, int size) {
         super(webNode);
         super.setValue(super.getValue() + 2);
+        super.size = size;
     }
     @Override
     protected double getProbabilityToDisappear() {

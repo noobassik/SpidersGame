@@ -10,6 +10,8 @@ public class WidgetFactory {
     private final Map<WebNode, WebNodeWidget> webNodes = new HashMap<>();
     private final Map<Animal, AnimalWidget> animals = new HashMap<>();
 
+    public static final int CELL_SIZE = 120;
+
     private boolean playerInWeb = false;
 
     public WebNodeWidget create(WebNode webNode){
@@ -70,13 +72,25 @@ public class WidgetFactory {
     }
 
     private AnimalWidget createWidget(Animal animal){
+        int size = 120;
+        if (animal instanceof Insect){
+            size = calculateSize(((Insect) animal).getSize());
+        }
         return switch (animal.getClass().getName().split("\\.")[animal.getClass().getName().split("\\.").length - 1]) {
             case "Spider" -> new PlayerSpiderWidget((Spider) animal);
-            case "Fly" -> new FlyWidget((Fly)animal);
-            case "Mosquito" -> new MosquitoWidget((Mosquito) animal);
-            case "Grasshopper" -> new GrasshopperWidget((Grasshopper)animal);
-            case "Wasp" -> new WaspWidget((Wasp)animal);
+            case "Fly" -> new InsectWidget("images/fly.png", size, size);
+            case "Mosquito" -> new InsectWidget("images/mosquito.png", size, size);
+            case "Grasshopper" -> new InsectWidget("images/grasshopper.png", size, size);
+            case "Wasp" -> new InsectWidget("images/wasp.png", size, size);
             default -> null;
+        };
+    }
+
+    private int calculateSize(int size) {
+        return switch (size){
+            case 1 -> 40;
+            case 2 -> 60;
+            default -> 90;
         };
     }
 }

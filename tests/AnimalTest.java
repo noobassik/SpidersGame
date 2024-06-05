@@ -58,7 +58,7 @@ public class AnimalTest {
         Bot bot = new Bot(spiderMoveStrategy, web);
         Nature nature = new Nature(web, bot);
         Game game = new Game(web, nature, bot);
-        Insect insect = new Fly(web.getWebNode(new Point(0, 0)));
+        Insect insect = new Fly(web.getWebNode(new Point(0, 0)), 1);
         web.addInsect(insect);
         Spider playerSpider = new Spider(web.getWebNode(new Point(1, 0)), 10);
         web.addSpider(playerSpider);

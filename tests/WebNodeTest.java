@@ -8,6 +8,7 @@ import org.junit.Test;
 import java.awt.*;
 
 public class WebNodeTest {
+
     @Test
     public void ReleasePlayerSpider() {
         Web web = new Web(3);
@@ -37,7 +38,7 @@ public class WebNodeTest {
     @Test
     public void ReleaseInsect() {
         Web web = new Web(3);
-        Grasshopper grasshopper = new Grasshopper(web.getWebNode(new Point(0, 2)));
+        Grasshopper grasshopper = new Grasshopper(web.getWebNode(new Point(0, 2)), 1);
         web.addInsect(grasshopper);
         grasshopper.getWebNode().setAnimal(null);
         grasshopper.setWebNode(null);
@@ -48,8 +49,8 @@ public class WebNodeTest {
     @Test
     public void InitializeAnimalInOccupiedWebNode() {
         Web web = new Web(3);
-        Grasshopper grasshopper = new Grasshopper(web.getWebNode(new Point(0, 2)));
-        Fly fly = new Fly(web.getWebNode(new Point(0, 2)));
+        Grasshopper grasshopper = new Grasshopper(web.getWebNode(new Point(0, 2)), 1);
+        Fly fly = new Fly(web.getWebNode(new Point(0, 2)), 1);
         web.addInsect(grasshopper);
         web.addInsect(fly); // муха не добавляется никуда и поля null
         Assert.assertEquals(grasshopper, web.getWebNode(new Point(0, 2)).getAnimal());

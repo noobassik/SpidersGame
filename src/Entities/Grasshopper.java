@@ -8,15 +8,15 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Grasshopper extends Insect {
-    public static int size = Insect.size.MIDDLE.ordinal();
     public double probabilityToDisappear = calculateProbabilityToDisappear();
     public double probabilityToAppear = calculateProbabilityToAppear();
 
     private int attempts = 0;
 
-    public Grasshopper(WebNode webNode) {
+    public Grasshopper(WebNode webNode, int size) {
         super(webNode);
         super.setValue(super.getValue() + 4);
+        super.size = size;
     }
 
     @Override
@@ -46,17 +46,21 @@ public class Grasshopper extends Insect {
             die();
         } else {
             attempts++;
-            Random random = new Random();
-            ArrayList<WebNode> emptyWebNodes = this.web.getEmptyWebNodes();
-            int randomIndex = random.nextInt(emptyWebNodes.size());
-            this.webNode.setAnimal(null);
-            WebNode oldWebNode = this.webNode;
-            WebNode newWebNode = emptyWebNodes.get(randomIndex);
-            this.setWebNode(newWebNode);
-            this.webNode.setAnimal(this);
-            fireGrasshopperJumpedController(oldWebNode, newWebNode);
+            jump();
         }
 
+    }
+
+    protected void jump() {
+        Random random = new Random();
+        ArrayList<WebNode> emptyWebNodes = this.web.getEmptyWebNodes();
+        int randomIndex = random.nextInt(emptyWebNodes.size());
+        this.webNode.setAnimal(null);
+        WebNode oldWebNode = this.webNode;
+        WebNode newWebNode = emptyWebNodes.get(randomIndex);
+        this.setWebNode(newWebNode);
+        this.webNode.setAnimal(this);
+        fireGrasshopperJumpedController(oldWebNode, newWebNode);
     }
 
     private ArrayList<GrasshopperControllerActionListener> grasshopperListeners = new ArrayList<>();
